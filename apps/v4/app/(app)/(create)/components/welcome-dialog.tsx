@@ -2,6 +2,7 @@
 
 import * as React from "react"
 
+import { MoonwitnessMark } from "@/components/moonwitness-mark"
 import { Button } from "@/styles/base-nova/ui/button"
 import {
   Dialog,
@@ -39,14 +40,7 @@ export function WelcomeDialog() {
         className="dialog-ring max-w-92 min-w-0 gap-0 overflow-hidden rounded-xl p-0 sm:max-w-sm dark:bg-neutral-900"
       >
         <div className="flex aspect-[2/1.2] w-full items-center justify-center rounded-t-xl bg-neutral-950 text-center text-neutral-100 sm:aspect-2/1">
-          <svg aria-hidden="true" viewBox="0 0 64 64" className="size-14">
-            <circle cx="28" cy="32" r="19" fill="#ffd400" />
-            <circle cx="38" cy="25" r="18" fill="#07060b" />
-            <path
-              d="M49 42l2 4 4 2-4 2-2 4-2-4-4-2 4-2 2-4Z"
-              fill="#f7f4ec"
-            />
-          </svg>
+<MoonwitnessMark size={56} />
         </div>
         <DialogHeader className="gap-1 p-4">
           <DialogTitle className="text-left text-base">
