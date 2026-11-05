@@ -1,12 +1,15 @@
 export const siteConfig = {
-  name: "shadcn/ui",
-  url: "https://ui.shadcn.com",
-  ogImage: "https://ui.shadcn.com/og.jpg",
+  name: "Moonwitness UI",
+  url: process.env.NEXT_PUBLIC_APP_URL || "http://localhost:4000",
+  ogImage: "/opengraph-image.png",
+  tagline: "Observe. Understand. Preserve.",
   description:
-    "Composable, accessible components with thoughtful defaults. Build your own component library with code you can customize, extend, and make your own.",
+    "The interface language of a living knowledge ecosystem. Build accessible, evidence-conscious digital experiences with Moonwitness UI.",
+  repository: "https://github.com/BRIDGE-ALLAH/MW-UI",
+  repositoryApi: "https://api.github.com/repos/BRIDGE-ALLAH/MW-UI",
   links: {
-    twitter: "https://twitter.com/shadcn",
-    github: "https://github.com/shadcn-ui/ui",
+    github: "https://github.com/BRIDGE-ALLAH/MW-UI",
+    upstream: "https://ui.shadcn.com",
   },
   navItems: [
     {
@@ -45,6 +48,6 @@ export const siteConfig = {
 }
 
 export const META_THEME_COLORS = {
-  light: "#ffffff",
-  dark: "#09090b",
+  light: "#f7f4ec",
+  dark: "#07060b",
 }

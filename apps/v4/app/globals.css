@@ -460,3 +460,22 @@
     @apply rounded-xl border-none bg-clip-padding shadow-2xl ring-4 ring-neutral-200/80 dark:bg-neutral-900 dark:ring-neutral-800;
   }
 }
+
+
+/*
+ * Moonwitness brand reference tokens.
+ * Kept separate from the selectable component themes until the canonical
+ * MoonUI token integration is reviewed and approved.
+ */
+:root {
+  --mw-ink: #07060b;
+  --mw-surface: #13101d;
+  --mw-surface-2: #1b172a;
+  --mw-paper: #0d0b14;
+  --mw-foreground: #f7f4ec;
+  --mw-accent: #ffd400;
+  --mw-pink: #ff007a;
+  --mw-cyan: #00d4ff;
+  --mw-moon: #9d4edd;
+  --mw-muted: #9e96b0;
+}
