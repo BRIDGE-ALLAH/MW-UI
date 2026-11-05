@@ -1,5 +1,7 @@
 export const siteConfig = {
   name: "Moonwitness UI",
+  url: process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:4000",
+  ogImage: "/opengraph-image.png",
   tagline: "Observe. Understand. Preserve.",
   description:
     "The interface language of a living knowledge ecosystem. Build accessible, evidence-conscious digital experiences with Moonwitness UI.",
