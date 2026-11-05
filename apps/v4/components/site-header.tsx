@@ -1,7 +1,6 @@
 import Link from "next/link"
 import { PlusSignIcon as HugePlusSignIcon } from "@hugeicons/core-free-icons"
 import { HugeiconsIcon } from "@hugeicons/react"
-import { MoonStar } from "lucide-react"
 
 import { getColors } from "@/lib/colors"
 import { siteConfig } from "@/lib/config"
@@ -34,7 +33,19 @@ export function SiteHeader() {
             className="mr-5 inline-flex shrink-0 items-center gap-2 rounded-md font-semibold tracking-tight focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
             <span className="inline-flex size-8 items-center justify-center rounded-lg bg-[var(--mw-accent)] text-[var(--mw-ink)]">
-              <MoonStar aria-hidden="true" className="size-5" />
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 64 64"
+                className="size-6"
+                fill="none"
+              >
+                <circle cx="28" cy="32" r="19" fill="currentColor" />
+                <circle cx="38" cy="25" r="18" fill="var(--mw-accent)" />
+                <path
+                  d="M49 42l2 4 4 2-4 2-2 4-2-4-4-2 4-2 2-4Z"
+                  fill="currentColor"
+                />
+              </svg>
             </span>
             <span className="hidden sm:inline">
               Moonwitness <span className="text-muted-foreground">UI</span>
