@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">Moonwitness UI</title>
+  <rect width="64" height="64" rx="16" fill="#07060b"/>
+  <circle cx="28" cy="32" r="19" fill="#ffd400"/>
+  <circle cx="38" cy="25" r="18" fill="#07060b"/>
+  <path d="M47 42l2.2 4.8 4.8 2.2-4.8 2.2L47 56l-2.2-6.8-4.8-2.2 4.8-2.2L47 42Z" fill="#f7f4ec"/>
+</svg>
