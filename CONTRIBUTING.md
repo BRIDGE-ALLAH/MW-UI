@@ -26,7 +26,7 @@ This is a pnpm workspace monorepo using Turborepo.
 | `apps/v4/content` | Documentation content |
 | `apps/v4/registry` | Registry component sources |
 | `packages` | Shared packages and tooling |
-| `docs` | Project blueprint, brand, architecture, and roadmap |
+| Root `*.md` files | Project blueprint, brand, architecture, and roadmap |
 
 ## Development setup
 
