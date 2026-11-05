@@ -2,7 +2,6 @@
 
 import * as React from "react"
 
-import { Icons } from "@/components/icons"
 import { Button } from "@/styles/base-nova/ui/button"
 import {
   Dialog,
@@ -14,7 +13,7 @@ import {
   DialogTitle,
 } from "@/styles/base-nova/ui/dialog"
 
-const STORAGE_KEY = "shadcn-create-welcome-dialog"
+const STORAGE_KEY = "moonwitness-ui-project-builder-welcome"
 
 export function WelcomeDialog() {
   const [isOpen, setIsOpen] = React.useState(false)
@@ -26,7 +25,6 @@ export function WelcomeDialog() {
     }
   }, [])
 
-  // Stable callback — avoids re-creation on every render. (rerender-functional-setstate)
   const handleOpenChange = React.useCallback((open: boolean) => {
     setIsOpen(open)
     if (!open) {
@@ -41,20 +39,24 @@ export function WelcomeDialog() {
         className="dialog-ring max-w-92 min-w-0 gap-0 overflow-hidden rounded-xl p-0 sm:max-w-sm dark:bg-neutral-900"
       >
         <div className="flex aspect-[2/1.2] w-full items-center justify-center rounded-t-xl bg-neutral-950 text-center text-neutral-100 sm:aspect-2/1">
-          <div className="font-mono text-2xl font-bold">
-            <Icons.logo className="size-12" />
-          </div>
+          <svg aria-hidden="true" viewBox="0 0 64 64" className="size-14">
+            <circle cx="28" cy="32" r="19" fill="#ffd400" />
+            <circle cx="38" cy="25" r="18" fill="#07060b" />
+            <path
+              d="M49 42l2 4 4 2-4 2-2 4-2-4-4-2 4-2 2-4Z"
+              fill="#f7f4ec"
+            />
+          </svg>
         </div>
         <DialogHeader className="gap-1 p-4">
           <DialogTitle className="text-left text-base">
-            Build your own shadcn/ui
+            Create your Moonwitness UI project
           </DialogTitle>
           <DialogDescription className="text-left leading-relaxed text-foreground">
-            Customize everything from the ground up. Pick your component
-            library, font, color scheme, and more.
+            Shape your project from the ground up. Choose a component base, font, color scheme, icons, and more.
           </DialogDescription>
           <DialogDescription className="mt-2 text-left leading-relaxed font-medium text-foreground">
-            Available for all major React frameworks.
+            Available for major React frameworks.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="m-0">
