@@ -1,5 +1,7 @@
 import { ImageResponse } from "next/og"
 
+import { MoonwitnessMark } from "@/components/moonwitness-mark"
+
 async function loadAssets(): Promise<
   { name: string; data: Buffer; weight: 400 | 600; style: "normal" }[]
 > {
@@ -53,19 +55,7 @@ export async function GET(request: Request) {
         <div tw="flex border absolute border-[#ffd400]/20 inset-x-0 h-[1px] top-16" />
         <div tw="flex border absolute border-[#ffd400]/20 inset-x-0 h-[1px] bottom-16" />
         <div tw="flex absolute flex-row bottom-24 right-24 text-white">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 64 64"
-            width={48}
-            height={48}
-          >
-            <circle cx="28" cy="32" r="19" fill="#ffd400" />
-            <circle cx="38" cy="25" r="18" fill="#07060b" />
-            <path
-              d="M49 42l2 4 4 2-4 2-2 4-2-4-4-2 4-2 2-4Z"
-              fill="#f7f4ec"
-            />
-          </svg>
+<MoonwitnessMark size={48} />
         </div>
         <div tw="flex flex-col absolute w-[896px] justify-center inset-32">
           <div

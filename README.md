@@ -46,6 +46,15 @@ It provides the interface layer—not the authoritative source of application da
 | `apps/v4/registry` | Registry component sources |
 | Root `*.md` files | Project blueprint, brand, architecture, roadmap, and contribution guide |
 
+## Brand assets
+
+- [Primary SVG mark](./apps/v4/public/brand/moonwitness-mark.svg)
+- [Monochrome SVG mark](./apps/v4/public/brand/moonwitness-mark-mono.svg)
+- [Application icon](./apps/v4/app/icon.svg)
+- [Social preview source](./apps/v4/app/opengraph-image.tsx)
+
+Use the shared [MoonwitnessMark component](./apps/v4/components/moonwitness-mark.tsx) in React surfaces instead of recreating the symbol.
+
 ## Documentation
 
 - [Blueprint](./BLUEPRINT.md) — product vision, scope, principles, layers, and quality gates.

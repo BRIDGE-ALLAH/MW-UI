@@ -44,7 +44,9 @@ Avoid generic space wallpaper as identity, excessive neon on dense text, decorat
 | Moon | `#9d4edd` | Secondary identity accent |
 | Muted | `#9e96b0` | Secondary text |
 
-Treat these as semantic references. Implement through approved tokens, not one-off values. Verify contrast in light and dark contexts. Pair status colors with text or accessible labels.
+These references are implemented as the default semantic palette in `apps/v4/app/globals.css`. The default light appearance uses warm paper and deep ink; the default dark appearance uses ink and violet-tinted surfaces with warm foreground text and yellow primary actions. User-selectable theme presets remain available and intentionally override the default palette.
+
+Use semantic roles rather than applying hex values directly to components. Verify contrast in both appearances and all selectable presets. Pair status colors with text or accessible labels. Pink, cyan, and moon-purple are supporting accents, not replacements for semantic success, warning, or error states.
 
 ## Typography
 
@@ -68,7 +70,14 @@ Distinguish facts, attribution, interpretation, and proposal. Avoid absolute cla
 
 ## Logo and symbol direction
 
-The mark is a simple, scalable celestial witness symbol: a crescent or orbital arc paired with a small point of light. It must remain legible at favicon size and work in monochrome.
+The mark is a simple, scalable celestial witness symbol: a yellow crescent paired with a warm-white point of light on deep ink. It must remain legible at favicon size and work in monochrome.
+
+Canonical assets live in `apps/v4/public/brand/`:
+- `moonwitness-mark.svg` — primary color mark on a transparent canvas.
+- `moonwitness-mark-mono.svg` — monochrome mark for single-color use.
+- `apps/v4/app/icon.svg` — app icon with its deep-ink tile.
+
+The React implementation is centralized in `apps/v4/components/moonwitness-mark.tsx`; use it in application surfaces instead of redrawing the symbol. Keep the app icon, header, project-builder welcome, and social previews visually aligned.
 
 Do not imitate a religious seal, sacred calligraphy, official institutional insignia, or an existing third-party logo. Keep the wordmark separate from the symbol for compact placements.
 

@@ -1,5 +1,7 @@
 import { ImageResponse } from "next/og"
 
+import { MoonwitnessMark } from "@/components/moonwitness-mark"
+
 export const alt =
   "Moonwitness UI — The Interface Language of a Living Knowledge Ecosystem"
 export const size = {
@@ -76,14 +78,7 @@ export default function Image() {
                 justifyContent: "center",
               }}
             >
-              <svg width="42" height="42" viewBox="0 0 64 64">
-                <circle cx="28" cy="32" r="19" fill="#ffd400" />
-                <circle cx="38" cy="25" r="18" fill="#07060b" />
-                <path
-                  d="M49 42l2 4 4 2-4 2-2 4-2-4-4-2 4-2 2-4Z"
-                  fill="#f7f4ec"
-                />
-              </svg>
+              <MoonwitnessMark size={42} />
             </div>
             <div
               style={{

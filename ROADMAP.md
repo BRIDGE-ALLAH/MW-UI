@@ -8,7 +8,9 @@ Roadmap items are planned work, not shipped capabilities.
 - [x] Define Evidence-First Moonpunk direction.
 - [x] Document blueprint, brand rules, architecture boundaries, and roadmap.
 - [x] Update repository and site metadata.
-- [x] Add a project mark and social preview artwork.
+- [x] Add canonical color and monochrome vector marks, a shared React mark component, app icon, and social preview artwork.
+- [x] Apply the Moonwitness semantic palette to default light and dark appearances while preserving selectable themes.
+- [x] Publish Moonwitness-specific AI/LLM project context.
 - [ ] Review and approve the brand package with maintainers.
 
 **Acceptance:** identity is consistent, upstream attribution is preserved, and documentation distinguishes current implementation from future work.
