@@ -1,77 +1,55 @@
 ---
 title: Introduction
-description: shadcn/ui is a set of beautifully-designed, accessible components and a code distribution platform. Works with your favorite frameworks and AI models. Open Source. Open Code.
+description: Moonwitness UI is an open-source interface foundation for accessible, evidence-conscious digital experiences.
 ---
 
-**This is not a component library. It is how you build your component library.**
+**Moonwitness UI is the interface language of a living knowledge ecosystem.**
 
-You know how most traditional component libraries work: you install a package from NPM, import the components, and use them in your app.
+It brings together design foundations, reusable interface primitives, interaction patterns, documentation, and registry tooling. Its purpose is to help different products feel coherent without forcing them into one identical experience.
 
-This approach works well until you need to customize a component to fit your design system or require one that isn’t included in the library. **Often, you end up wrapping library components, writing workarounds to override styles, or mixing components from different libraries with incompatible APIs.**
+## Why Moonwitness UI
 
-This is what shadcn/ui aims to solve. It is built around the following principles:
+Information becomes useful when people can understand its context, inspect its sources, and recognize its limits. Interfaces should make that work easier.
 
-- **Open Code:** The top layer of your component code is open for modification.
-- **Composition:** Every component uses a common, composable interface, making them predictable.
-- **Distribution:** A flat-file schema and command-line tool make it easy to distribute components.
-- **Beautiful Defaults:** Carefully chosen default styles, so you get great design out-of-the-box.
-- **AI-Ready:** Open code for LLMs to read, understand, and improve.
+Moonwitness UI is guided by six principles:
 
-## Open Code
+- **Clarity before spectacle:** visual expression never obscures content or actions.
+- **Evidence before assertion:** distinguish source material, interpretation, testimony, simulation, AI output, and verified observation.
+- **Accessible by default:** semantic markup, keyboard operation, visible focus, assistive-technology feedback, responsive layouts, and reduced motion.
+- **One foundation, many experiences:** share semantics and behavior while allowing each product its own composition.
+- **Human responsibility:** interfaces support decisions; they do not claim authority that belongs to people or domain owners.
+- **Traceable by design:** preserve attribution, provenance, rights, version, and uncertainty wherever relevant.
 
-shadcn/ui hands you the actual component code. You have full control to customize and extend the components to your needs. This means:
+## An open-code foundation
 
-- **Full Transparency:** You see exactly how each component is built.
-- **Easy Customization:** Modify any part of a component to fit your design and functionality requirements.
-- **AI Integration:** Access to the code makes it straightforward for LLMs to read, understand, and even improve your components.
+This repository currently builds on React, Next.js, Tailwind CSS, and the shadcn/ui open-code and registry ecosystem. Components remain inspectable and customizable in the consuming project.
 
-_In a typical library, if you need to change a button’s behavior, you have to override styles or wrap the component. With shadcn/ui, you simply edit the button code directly._
+Moonwitness UI is the product identity and direction for this repository. It does not claim original authorship of upstream code, nor does the rebrand replace the certified `@moonwitness/moonui` implementation maintained in the MoonWitness XV ecosystem.
 
-<Accordion type="single" collapsible>
-  <AccordionItem value="faq-1" className="border-none">
-    <AccordionTrigger>
-      How do I pull upstream updates in an Open Code approach?
-    </AccordionTrigger>
-    <AccordionContent className="flex flex-col gap-4">
-      <p>
-        shadcn/ui follows a headless component architecture. This means the core
-        of your app can receive fixes by updating your dependencies, for
-        instance, @base-ui/react or input-otp.
-      </p>
-      <p>
-        The topmost layer, i.e., the one closest to your design system, is not
-        coupled with the implementation of the library. It stays open for
-        modification.
-      </p>
-    </AccordionContent>
-  </AccordionItem>
-</Accordion>
+See the [architecture and ownership guide](https://github.com/BRIDGE-ALLAH/MW-UI/blob/main/ARCHITECTURE.md) for the current boundaries and migration principles.
 
-## Composition
+## Design language
 
-Every component in shadcn/ui shares a common, composable interface. **If a component does not exist, we bring it in, make it composable, and adjust its style to match and work with the rest of the design system.**
+**Evidence-First Moonpunk** combines three influences:
 
-_A shared, composable interface means it's predictable for both your team and LLMs. You are not learning different APIs for every new component. Even for third-party ones._
+- celestial observatory: orientation, observation, and precision;
+- evidence-first editorial: readable research, archives, and source context;
+- instrumental operations: clear status, timelines, and purposeful controls.
 
-## Distribution
+The visual language uses deep ink surfaces, warm readable foregrounds, a restrained yellow highlight, and controlled pink, cyan, and moon-purple accents. Contrast, legibility, and meaning take priority over decorative effects.
 
-shadcn/ui is also a code distribution system. It defines a schema for components and a CLI to distribute them.
+## Evidence-aware interfaces
 
-- **Schema:** A flat-file structure that defines the components, their dependencies, and properties.
-- **CLI:** A command-line tool to distribute and install components across projects with cross-framework support.
+A component must not invent a source identifier, citation, rights clearance, review approval, timestamp, confidence score, or operational status. It should render domain-owned data and clearly represent missing, unresolved, simulated, or not-yet-reviewed information.
 
-_You can use the schema to distribute your components to other projects or have AI generate completely new components based on existing schema._
+A citation does not automatically establish truth or redistribution rights. A simulation is not a live measurement. An AI-generated value is not a substitute for accountable human review.
 
-## Beautiful Defaults
+## Explore the project
 
-shadcn/ui comes with a large collection of components that have carefully chosen default styles. They are designed to look good on their own and to work well together as a consistent system:
+- [Product blueprint](https://github.com/BRIDGE-ALLAH/MW-UI/blob/main/BLUEPRINT.md)
+- [Brand guidelines](https://github.com/BRIDGE-ALLAH/MW-UI/blob/main/BRAND_GUIDELINES.md)
+- [Architecture and ownership](https://github.com/BRIDGE-ALLAH/MW-UI/blob/main/ARCHITECTURE.md)
+- [Roadmap](https://github.com/BRIDGE-ALLAH/MW-UI/blob/main/ROADMAP.md)
+- [Contributing](https://github.com/BRIDGE-ALLAH/MW-UI/blob/main/CONTRIBUTING.md)
 
-- **Good Out-of-the-Box:** Your UI has a clean and minimal look without extra work.
-- **Unified Design:** Components naturally fit with one another. Each component is built to match the others, keeping your UI consistent.
-- **Easily Customizable:** If you want to change something, it's simple to override and extend the defaults.
-
-## AI-Ready
-
-The design of shadcn/ui makes it easy for AI tools to work with your code. Its open code and consistent API allow AI models to read, understand, and even generate new components.
-
-_An AI model can learn how your components work and suggest improvements or even create new components that integrate with your existing design._
+**The Moon Watches. The Record Remembers. The Evidence Remains Inspectable.**
