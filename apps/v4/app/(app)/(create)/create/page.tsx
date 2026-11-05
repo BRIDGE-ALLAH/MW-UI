@@ -19,11 +19,11 @@ const WelcomeDialog = dynamic(() =>
 )
 
 export const metadata: Metadata = {
-  title: "New Project",
+  title: "Project Builder",
   description:
     "Customize a Moonwitness UI project. Choose a component base, icons, color, theme, and fonts, then generate a setup command for your framework. The current builder uses the shadcn CLI and registry ecosystem.",
   openGraph: {
-    title: "New Project",
+    title: "Project Builder",
     description:
       "Customize a Moonwitness UI project. Choose a component base, icons, color, theme, and fonts, then generate a setup command for your framework. The current builder uses the shadcn CLI and registry ecosystem.",
     type: "website",
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "New Project",
+    title: "Project Builder",
     description:
       "Customize a Moonwitness UI project. Choose a component base, icons, color, theme, and fonts, then generate a setup command for your framework. The current builder uses the shadcn CLI and registry ecosystem.",
     images: [siteConfig.ogImage],
