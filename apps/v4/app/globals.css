@@ -462,9 +462,10 @@
 
 
 /*
- * Moonwitness brand reference tokens.
- * Kept separate from the selectable component themes until the canonical
- * MoonUI token integration is reviewed and approved.
+ * Moonwitness identity reference tokens.
+ * The root semantic palette below implements the default brand appearance.
+ * User-selected component theme presets can override semantic UI tokens.
+ * Canonical MoonUI package integration remains a separate reviewed task.
  */
 :root {
   --mw-ink: #07060b;
