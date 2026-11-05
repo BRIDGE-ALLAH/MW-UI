@@ -37,7 +37,7 @@ export function SiteHeader() {
                 aria-hidden="true"
                 viewBox="0 0 64 64"
                 className="size-6"
-                >
+              >
                 <circle cx="28" cy="32" r="19" fill="currentColor" />
                 <circle cx="38" cy="25" r="18" fill="var(--mw-ink)" />
                 <path
