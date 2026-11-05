@@ -9,6 +9,7 @@ import { CommandMenu } from "@/components/command-menu"
 import { DesignerActions } from "@/components/designer-actions"
 import { GitHubLink } from "@/components/github-link"
 import { MainNav } from "@/components/main-nav"
+import { MoonwitnessMark } from "@/components/moonwitness-mark"
 import { MobileNav } from "@/components/mobile-nav"
 import { ModeSwitcher } from "@/components/mode-switcher"
 import { Separator } from "@/registry/new-york-v4/ui/separator"
@@ -33,18 +34,7 @@ export function SiteHeader() {
             className="mr-5 inline-flex shrink-0 items-center gap-2 rounded-md font-semibold tracking-tight focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
             <span className="inline-flex size-8 items-center justify-center rounded-lg bg-[var(--mw-ink)] text-[var(--mw-accent)]">
-              <svg
-                aria-hidden="true"
-                viewBox="0 0 64 64"
-                className="size-6"
-              >
-                <circle cx="28" cy="32" r="19" fill="currentColor" />
-                <circle cx="38" cy="25" r="18" fill="var(--mw-ink)" />
-                <path
-                  d="M49 42l2 4 4 2-4 2-2 4-2-4-4-2 4-2 2-4Z"
-                  fill="currentColor"
-                />
-              </svg>
+<MoonwitnessMark size={24} />
             </span>
             <span className="hidden sm:inline">
               Moonwitness <span className="text-muted-foreground">UI</span>
