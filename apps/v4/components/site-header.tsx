@@ -34,7 +34,7 @@ export function SiteHeader() {
             className="mr-5 inline-flex shrink-0 items-center gap-2 rounded-md font-semibold tracking-tight focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
             <span className="inline-flex size-8 items-center justify-center rounded-lg bg-[var(--mw-ink)] text-[var(--mw-accent)]">
-<MoonwitnessMark size={24} />
+              <MoonwitnessMark size={24} />
             </span>
             <span className="hidden sm:inline">
               Moonwitness <span className="text-muted-foreground">UI</span>
