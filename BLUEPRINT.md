@@ -53,7 +53,7 @@ The result should be expressive but restrained: futuristic without obscurity, at
 ## System layers
 
 | Layer | Responsibility | Examples |
-| --- | --- | 
+| --- | --- |
 | Foundation | Shared visual and semantic rules | Tokens, typography, spacing, surfaces, themes |
 | Primitives | Reusable accessible controls | Buttons, inputs, dialogs, tabs, tooltips |
 | Patterns | Repeatable interaction structures | Form states, empty states, source cards |
