@@ -1,5 +1,6 @@
 import Link from "next/link"
-import { PlusSignIcon } from "@hugeicons/core-free-icons"
+import { MoonStar, PlusSignIcon } from "lucide-react"
+import { PlusSignIcon as HugePlusSignIcon } from "@hugeicons/core-free-icons"
 import { HugeiconsIcon } from "@hugeicons/react"
 
 import { getColors } from "@/lib/colors"
@@ -27,6 +28,18 @@ export function SiteHeader() {
             items={siteConfig.navItems}
             className="flex lg:hidden"
           />
+          <Link
+            href="/"
+            aria-label="Moonwitness UI home"
+            className="mr-5 inline-flex shrink-0 items-center gap-2 rounded-md font-semibold tracking-tight focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            <span className="inline-flex size-8 items-center justify-center rounded-lg bg-amber-300 text-neutral-950">
+              <MoonStar aria-hidden="true" className="size-5" />
+            </span>
+            <span className="hidden sm:inline">
+              Moonwitness <span className="text-muted-foreground">UI</span>
+            </span>
+          </Link>
           <MainNav items={siteConfig.navItems} className="hidden lg:flex" />
           <div className="ml-auto flex items-center gap-2 md:flex-1 md:justify-end">
             <div className="hidden w-full flex-1 md:flex md:w-auto md:flex-none">
@@ -48,7 +61,7 @@ export function SiteHeader() {
               <Separator orientation="vertical" />
               <Button asChild size="sm" className="h-[31px] rounded-lg">
                 <Link href="/create">
-                  <HugeiconsIcon icon={PlusSignIcon} />
+                  <HugeiconsIcon icon={HugePlusSignIcon} />
                   New
                 </Link>
               </Button>
