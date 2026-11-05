@@ -4,6 +4,7 @@ export const siteConfig = {
   description:
     "The interface language of a living knowledge ecosystem. Build accessible, evidence-conscious digital experiences with Moonwitness UI.",
   repository: "https://github.com/BRIDGE-ALLAH/MW-UI",
+  repositoryApi: "https://api.github.com/repos/BRIDGE-ALLAH/MW-UI",
   links: {
     github: "https://github.com/BRIDGE-ALLAH/MW-UI",
     upstream: "https://ui.shadcn.com",
