@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { MoonStar, PlusSignIcon } from "lucide-react"
+import { MoonStar } from "lucide-react"
 import { PlusSignIcon as HugePlusSignIcon } from "@hugeicons/core-free-icons"
 import { HugeiconsIcon } from "@hugeicons/react"
 
