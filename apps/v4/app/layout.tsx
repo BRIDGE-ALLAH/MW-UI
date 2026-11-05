@@ -22,16 +22,16 @@ export const metadata: Metadata = {
     default: siteConfig.name,
     template: `%s - ${siteConfig.name}`,
   },
-  metadataBase: new URL(siteConfig.url),
+  metadataBase: new URL("https://github.com"),
   description: siteConfig.description,
-  keywords: ["Next.js", "React", "Tailwind CSS", "Components", "shadcn"],
+  keywords: ["Moonwitness UI", "React", "Tailwind CSS", "Components", "UI library"],
   authors: [
     {
-      name: "shadcn",
-      url: "https://shadcn.com",
+      name: "Moonwitness UI",
+      url: "https://github.com/BRIDGE-ALLAH/MW-UI",
     },
   ],
-  creator: "shadcn",
+  creator: "Moonwitness UI",
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -39,31 +39,21 @@ export const metadata: Metadata = {
     title: siteConfig.name,
     description: siteConfig.description,
     siteName: siteConfig.name,
-    images: [
-      {
-        url: `${siteConfig.url}/opengraph-image.png`,
-        width: 1200,
-        height: 630,
-        alt: siteConfig.name,
-      },
-    ],
   },
   twitter: {
-    card: "summary_large_image",
+    card: "summary",
     title: siteConfig.name,
     description: siteConfig.description,
-    images: [`${siteConfig.url}/opengraph-image.png`],
-    creator: "@shadcn",
   },
   icons: {
     icon: "/favicon.ico",
     shortcut: "/favicon-16x16.png",
     apple: "/apple-touch-icon.png",
   },
-  manifest: `${siteConfig.url}/site.webmanifest`,
+  manifest: "/site.webmanifest",
   alternates: {
     types: {
-      "application/rss+xml": `${siteConfig.url}/rss.xml`,
+      "application/rss+xml": "/rss.xml",
     },
   },
 }
