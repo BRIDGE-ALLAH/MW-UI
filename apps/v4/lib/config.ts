@@ -1,11 +1,12 @@
 export const siteConfig = {
   name: "Moonwitness UI",
-  url: "https://github.com/BRIDGE-ALLAH/MW-UI",
-  ogImage: "https://github.com/BRIDGE-ALLAH/MW-UI",
+  tagline: "Observe. Understand. Preserve.",
   description:
-    "Moonwitness UI is an open-source component library built with React, Tailwind CSS, and accessible design primitives. Customize, extend, and make every component your own.",
+    "The interface language of a living knowledge ecosystem. Build accessible, evidence-conscious digital experiences with Moonwitness UI.",
+  repository: "https://github.com/BRIDGE-ALLAH/MW-UI",
   links: {
     github: "https://github.com/BRIDGE-ALLAH/MW-UI",
+    upstream: "https://ui.shadcn.com",
   },
   navItems: [
     {
@@ -44,6 +45,6 @@ export const siteConfig = {
 }
 
 export const META_THEME_COLORS = {
-  light: "#ffffff",
-  dark: "#09090b",
+  light: "#f7f4ec",
+  dark: "#07060b",
 }
