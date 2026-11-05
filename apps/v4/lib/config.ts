@@ -1,12 +1,11 @@
 export const siteConfig = {
-  name: "shadcn/ui",
-  url: "https://ui.shadcn.com",
-  ogImage: "https://ui.shadcn.com/og.jpg",
+  name: "Moonwitness UI",
+  url: "https://github.com/BRIDGE-ALLAH/MW-UI",
+  ogImage: "https://github.com/BRIDGE-ALLAH/MW-UI",
   description:
-    "Composable, accessible components with thoughtful defaults. Build your own component library with code you can customize, extend, and make your own.",
+    "Moonwitness UI is an open-source component library built with React, Tailwind CSS, and accessible design primitives. Customize, extend, and make every component your own.",
   links: {
-    twitter: "https://twitter.com/shadcn",
-    github: "https://github.com/shadcn-ui/ui",
+    github: "https://github.com/BRIDGE-ALLAH/MW-UI",
   },
   navItems: [
     {
