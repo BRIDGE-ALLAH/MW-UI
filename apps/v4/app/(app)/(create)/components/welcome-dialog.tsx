@@ -40,7 +40,7 @@ export function WelcomeDialog() {
         className="dialog-ring max-w-92 min-w-0 gap-0 overflow-hidden rounded-xl p-0 sm:max-w-sm dark:bg-neutral-900"
       >
         <div className="flex aspect-[2/1.2] w-full items-center justify-center rounded-t-xl bg-neutral-950 text-center text-neutral-100 sm:aspect-2/1">
-<MoonwitnessMark size={56} />
+          <MoonwitnessMark size={56} />
         </div>
         <DialogHeader className="gap-1 p-4">
           <DialogTitle className="text-left text-base">
