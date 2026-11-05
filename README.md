@@ -44,7 +44,7 @@ It provides the interface layer—not the authoritative source of application da
 | `apps/v4` | Next.js documentation, examples, and component experience |
 | `packages` | Shared packages and tooling |
 | `apps/v4/registry` | Registry component sources |
-| `docs` | Project blueprint, brand, architecture, and roadmap |
+| Root `*.md` files | Project blueprint, brand, architecture, roadmap, and contribution guide |
 
 ## Documentation
 
