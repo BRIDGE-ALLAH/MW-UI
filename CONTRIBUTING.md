@@ -1,212 +1,101 @@
-# Contributing
+# Contributing to Moonwitness UI
 
-Thanks for your interest in contributing to ui.shadcn.com. We're happy to have you here.
+Thank you for contributing. Moonwitness UI is an open-source interface project focused on clarity, accessibility, traceability, and a coherent design language across different product experiences.
 
-Please take a moment to review this document before submitting your first pull request. We also strongly recommend that you check for open issues and pull requests to see if someone else is working on something similar.
+Please review this guide before opening a pull request.
 
-If you need any help, feel free to reach out to [@shadcn](https://twitter.com/shadcn).
+## Project principles
 
-## About this repository
+Contributions should support [BLUEPRINT.md](./BLUEPRINT.md) and [BRAND_GUIDELINES.md](./BRAND_GUIDELINES.md):
 
-This repository is a monorepo.
+- clarity before visual spectacle;
+- accessible behavior by default;
+- explicit system and evidence states;
+- source attribution and rights awareness;
+- consistent semantics with room for product-specific expression;
+- honest separation between implemented capability and roadmap direction.
 
-- We use [pnpm](https://pnpm.io) and [`workspaces`](https://pnpm.io/workspaces) for development.
-- We use [Turborepo](https://turbo.build/repo) as our build system.
-- We use [changesets](https://github.com/changesets/changesets) for managing releases.
+## Repository structure
 
-## Structure
+This is a pnpm workspace monorepo using Turborepo.
 
-This repository is structured as follows:
+| Path | Purpose |
+| --- | --- |
+| `apps/v4/app` | Next.js application routes and layouts |
+| `apps/v4/components` | Website and documentation components |
+| `apps/v4/content` | Documentation content |
+| `apps/v4/registry` | Registry component sources |
+| `packages` | Shared packages and tooling |
+| `docs` | Project blueprint, brand, architecture, and roadmap |
 
-```
-apps
-└── v4
-    ├── app
-    ├── components
-    ├── content
-    └── registry
-        └── new-york-v4
-            ├── example
-            └── ui
-packages
-└── shadcn
-```
-
-| Path                 | Description                              |
-| -------------------- | ---------------------------------------- |
-| `apps/v4/app`        | The Next.js application for the website. |
-| `apps/v4/components` | The React components for the website.    |
-| `apps/v4/content`    | The content for the website.             |
-| `apps/v4/registry`   | The registry for the components.         |
-| `packages/shadcn`    | The `shadcn` package.                    |
-| `packages/registry`  | The `@shadcn/registry` package.          |
-
-## Development
-
-### Fork this repo
-
-You can fork this repo by clicking the fork button in the top right corner of this page.
-
-### Clone on your local machine
+## Development setup
 
 ```bash
-git clone https://github.com/your-username/ui.git
-```
-
-### Navigate to project directory
-
-```bash
-cd ui
-```
-
-### Create a new Branch
-
-```bash
-git checkout -b my-new-branch
-```
-
-### Install dependencies
-
-```bash
+git clone https://github.com/BRIDGE-ALLAH/MW-UI.git
+cd MW-UI
 pnpm install
+pnpm --filter=v4 registry:build
+pnpm v4:dev
 ```
 
-### Run a workspace
+The v4 application runs at `http://localhost:4000`.
 
-You can use the `pnpm --filter=[WORKSPACE]` command to start the development process for a workspace.
-
-#### Examples
-
-1. To run the `ui.shadcn.com` website:
+Useful checks:
 
 ```bash
-pnpm --filter=v4 dev
+pnpm lint
+pnpm typecheck
+pnpm format:check
+pnpm check
 ```
 
-> **Fresh clone?** The generated styles are not checked into git. Run
-> `pnpm --filter=v4 registry:build --style all` once before starting the dev
-> server. If you forget, the dev server will fail fast and tell you exactly
-> this.
-
-2. To run the `shadcn` package:
+For a full build, run:
 
 ```bash
-pnpm shadcn:dev
+pnpm v4:build
 ```
 
-This also watches `@shadcn/registry`, which the CLI depends on.
+A fresh clone may require generated registry styles before the dev server starts. See the registry documentation and scripts for the current workflow.
 
-## Running the CLI Locally
+## Component contributions
 
-To run the CLI locally, you can follow the workflow:
+When adding or changing a registry component:
 
-1. Start by running the dev server:
+1. inspect existing component variants and shared patterns;
+2. preserve API consistency and composability;
+3. implement semantic markup and keyboard behavior;
+4. include visible focus and accessible labels;
+5. handle loading, error, empty, disabled, and success states as relevant;
+6. respect reduced motion and responsive layouts;
+7. update documentation and examples;
+8. add or update tests;
+9. run the registry build and relevant checks.
 
-   ```bash
-   pnpm dev
-   ```
+Evidence-oriented components must not invent source identities, citations, rights status, review approvals, timestamps, or confidence values. They should display domain-supplied information and clearly represent missing or unresolved data.
 
-2. In another terminal tab, test the CLI by running:
+## Design and assets
 
-   ```bash
-   pnpm shadcn
-   ```
+Follow [BRAND_GUIDELINES.md](./BRAND_GUIDELINES.md). Prefer semantic tokens over hard-coded color values. Keep text readable and status meaning available without color alone.
 
-   To test the CLI in a specific app, use a command like:
+Only contribute original or appropriately licensed assets. Preserve author, source, license, and consent information. Do not add unlicensed fonts, images, music, or other media.
 
-   ```bash
-   pnpm shadcn <init | add | ...> -c ~/Desktop/my-app
-   ```
+## Upstream acknowledgements
 
-This workflow ensures that you are running the most recent version of the registry and testing the CLI properly in your local environment.
+This repository builds on shadcn/ui and related open-source dependencies. Preserve existing copyright notices, license files, attribution, and package-specific terms. Do not remove upstream notices as part of branding changes.
 
-## Documentation
+## Pull requests
 
-The documentation for this project is located in the `v4` workspace. You can run the documentation locally by running the following command:
+Use focused changes and conventional commit messages, for example:
 
-```bash
-pnpm --filter=v4 dev
-```
+- `docs(brand): refine visual identity guidance`
+- `feat(patterns): add provenance rail`
+- `fix(a11y): restore dialog focus`
+- `chore(metadata): update site identity`
 
-Documentation is written using [MDX](https://mdxjs.com). You can find the documentation files in the `apps/v4/content/docs` directory.
+A pull request should explain what changed and why, which components or experiences are affected, how accessibility and responsive behavior were checked, what tests/builds were run, and any known limitations.
 
-## Components
+Do not describe planned capabilities as shipped. Clearly label mock, sample, and simulated data.
 
-We use a registry system for developing components. You can find the source code for the components under `apps/v4/registry`. The components are organized by styles.
+## License
 
-```bash
-apps
-└── v4
-    └── registry
-        └── new-york-v4
-            ├── example
-            └── ui
-```
-
-When adding or modifying components, please ensure that:
-
-1. You make the changes for every style.
-2. You update the documentation.
-3. You run `pnpm registry:build` to update the registry.
-
-See [`apps/v4/registry/README.md`](apps/v4/registry/README.md) for how the
-registry pipeline is structured and for the faster targeted build modes
-(`--style`, `--registry`, `--examples`, `--indexes`) you can use while
-iterating locally. Always run the full `pnpm registry:build` before committing.
-
-Note that most generated output is not tracked in git: the installable JSON
-under `apps/v4/public/r/styles` and the compiled styles under `apps/v4/styles`
-are gitignored and rebuilt on every deploy. Running `registry:build` will not
-dirty your working tree with generated files — only changes to the authored
-sources (e.g. `registry/bases`) and the tracked indexes are committed.
-
-## Commit Convention
-
-Before you create a Pull Request, please check whether your commits comply with
-the commit conventions used in this repository.
-
-When you create a commit we kindly ask you to follow the convention
-`category(scope or module): message` in your commit message while using one of
-the following categories:
-
-- `feat / feature`: all changes that introduce completely new code or new
-  features
-- `fix`: changes that fix a bug (ideally you will additionally reference an
-  issue if present)
-- `refactor`: any code related change that is not a fix nor a feature
-- `docs`: changing existing or creating new documentation (i.e. README, docs for
-  usage of a lib or cli usage)
-- `build`: all changes regarding the build of the software, changes to
-  dependencies or the addition of new dependencies
-- `test`: all changes regarding tests (adding new tests or changing existing
-  ones)
-- `ci`: all changes regarding the configuration of continuous integration (i.e.
-  github actions, ci system)
-- `chore`: all changes to the repository that do not fit into any of the above
-  categories
-
-  e.g. `feat(components): add new prop to the avatar component`
-
-If you are interested in the detailed specification you can visit
-https://www.conventionalcommits.org/ or check out the
-[Angular Commit Message Guidelines](https://github.com/angular/angular/blob/22b96b9/CONTRIBUTING.md#-commit-message-guidelines).
-
-## Requests for new components
-
-If you have a request for a new component, please open a discussion on GitHub. We'll be happy to help you out.
-
-## CLI
-
-The `shadcn` package is a CLI for adding components to your project. You can find the documentation for the CLI [here](https://ui.shadcn.com/docs/cli).
-
-Changes to the CLI commands should be made in the `packages/shadcn` directory. The registry and install logic the CLI uses (fetching and resolving registry items, `components.json`, updaters and transformers) lives in `packages/registry`, published as `@shadcn/registry`. If you can, it would be great if you could add tests for your changes.
-
-## Testing
-
-Tests are written using [Vitest](https://vitest.dev). You can run all the tests from the root of the repository.
-
-```bash
-pnpm test
-```
-
-Please ensure that the tests are passing when submitting a pull request. If you're adding new features, please include tests.
+The repository currently uses the [MIT license](./LICENSE.md). Preserve upstream license notices and verify the terms of individual dependencies and assets.
