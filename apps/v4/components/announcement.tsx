@@ -6,8 +6,8 @@ import { Badge } from "@/registry/new-york-v4/ui/badge"
 export function Announcement() {
   return (
     <Badge asChild variant="secondary" className="bg-muted">
-      <Link href="/docs/changelog">
-        Trace, Code Block and AI Elements <ArrowRightIcon />
+      <Link href="/docs/moonwitness-ui">
+        Meet the Moonwitness UI foundation <ArrowRightIcon />
       </Link>
     </Badge>
   )
