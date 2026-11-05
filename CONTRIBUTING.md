@@ -38,7 +38,7 @@ pnpm --filter=v4 registry:build
 pnpm v4:dev
 ```
 
-The v4 application runs at `http://localhost:4000`.
+The v4 application runs at `http://localhost:4000`. Configure `NEXT_PUBLIC_APP_URL` in `apps/v4/.env.local` to the local origin during development; deployments must set it to their public HTTPS origin for correct canonical URLs, sitemap, robots, RSS, and social metadata.
 
 Useful checks:
 
