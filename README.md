@@ -1,16 +1,25 @@
-# shadcn/ui
+# Moonwitness UI
 
-A set of beautifully designed components that you can customize, extend, and build on. Start here then make it your own. Open Source. Open Code. **Use this to build your own component library**.
+Moonwitness UI is an open-source component library built with React, Tailwind CSS, and accessible design primitives.
 
-![hero](apps/v4/public/opengraph-image.png)
+Customize, extend, and build your own interface system with components designed to be adapted to your project.
 
 ## Documentation
 
-Visit https://ui.shadcn.com/docs to view the documentation.
+Explore the documentation and component examples in the application.
+
+## Development
+
+This repository uses pnpm workspaces and Turborepo.
+
+```bash
+pnpm install
+pnpm v4:dev
+```
 
 ## Contributing
 
-Please read the [contributing guide](/CONTRIBUTING.md).
+Contributions are welcome. Please read the contributing guide before submitting changes.
 
 ## License
 
