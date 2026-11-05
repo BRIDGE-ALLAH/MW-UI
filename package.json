@@ -100,5 +100,11 @@
         }
       }
     }
-  }
+  },
+  "description": "The interface language of a living knowledge ecosystem.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BRIDGE-ALLAH/MW-UI.git"
+  },
+  "homepage": "https://github.com/BRIDGE-ALLAH/MW-UI"
 }
