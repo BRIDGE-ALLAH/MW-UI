@@ -78,7 +78,7 @@ export default function Image() {
                 justifyContent: "center",
               }}
             >
-<MoonwitnessMark size={42} />
+              <MoonwitnessMark size={42} />
             </div>
             <div
               style={{
