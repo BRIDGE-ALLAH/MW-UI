@@ -8,5 +8,13 @@
   "display": "standalone",
   "background_color": "#07060b",
   "theme_color": "#ffd400",
-  "categories": ["developer", "productivity"]
+  "categories": ["developer", "productivity"],
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
 }
