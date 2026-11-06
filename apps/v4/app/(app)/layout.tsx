@@ -7,8 +7,20 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       data-slot="layout"
       className="group/layout relative z-10 flex min-h-svh flex-col bg-background has-data-[slot=designer]:h-svh has-data-[slot=designer]:overflow-hidden"
     >
+      <a
+        href="#main-content"
+        className="sr-only z-[100] rounded-md bg-background px-4 py-2 text-foreground focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+      >
+        Skip to content
+      </a>
       <SiteHeader />
-      <main className="flex min-h-0 flex-1 flex-col">{children}</main>
+      <main
+        id="main-content"
+        tabIndex={-1}
+        className="flex min-h-0 flex-1 flex-col outline-none"
+      >
+        {children}
+      </main>
       <SiteFooter />
     </div>
   )

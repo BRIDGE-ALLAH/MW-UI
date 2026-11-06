@@ -90,6 +90,7 @@ export default function RootLayout({
       )}
     >
       <head>
+        <meta name="theme-color" content={META_THEME_COLORS.light} />
         <script
           dangerouslySetInnerHTML={{
             __html: DOCS_SIDEBAR_SCROLL_RESTORE_SCRIPT,
@@ -100,13 +101,12 @@ export default function RootLayout({
             __html: `
               try {
                 if (localStorage.theme === 'dark' || ((!('theme' in localStorage) || localStorage.theme === 'system') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                  document.querySelector('meta[name="theme-color"]').setAttribute('content', '${META_THEME_COLORS.dark}')
+                  document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '${META_THEME_COLORS.dark}')
                 }
               } catch (_) {}
             `,
           }}
         />
-        <meta name="theme-color" content={META_THEME_COLORS.light} />
       </head>
       <body
         className={cn(

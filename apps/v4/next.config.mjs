@@ -37,9 +37,6 @@ if (process.env.NODE_ENV === "development") {
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   devIndicators: false,
-  typescript: {
-    ignoreBuildErrors: true,
-  },
   experimental: {
     turbopackSharedRuntime: false,
     // Rewrite barrel imports to deep imports so a single icon doesn't pull the
