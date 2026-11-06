@@ -28,7 +28,8 @@ const MODES = new Set<RegistryMonitorMode>([
   "all",
 ])
 const DATA_DIRECTORY = path.resolve(
-  process.env.MOONWITNESS_DATA_DIR ?? path.join(process.cwd(), ".moonwitness-data")
+  process.env.MOONWITNESS_DATA_DIR ??
+    path.join(process.cwd(), ".moonwitness-data")
 )
 const WORK_DIRECTORY = path.join(DATA_DIRECTORY, "monitor-work")
 const PREVIOUS_STATE_PATH = path.join(WORK_DIRECTORY, "previous-state.json")
@@ -130,7 +131,10 @@ async function writeStepSummary({
     rows.push(...diagnostics.map((diagnostic) => "- " + diagnostic))
   }
 
-  await fs.appendFile(process.env.GITHUB_STEP_SUMMARY, rows.join("\n") + "\n")
+  await fs.appendFile(
+    process.env.GITHUB_STEP_SUMMARY,
+    rows.join("\n") + "\n"
+  )
 }
 
 async function prepareMonitor() {
