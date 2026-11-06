@@ -30,6 +30,7 @@
     "shadcn:test": "pnpm --filter=shadcn... test",
     "v4:dev": "pnpm --filter=v4 dev",
     "v4:build": "pnpm --filter=v4 build",
+    "v4:start": "pnpm --filter=v4 start",
     "lint": "turbo run lint",
     "lint:fix": "turbo run lint:fix",
     "preview": "turbo run preview",

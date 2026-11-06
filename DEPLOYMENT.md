@@ -21,11 +21,10 @@ Install the Node.js version required by the repository's `.nvmrc`, enable Corepa
 ```bash
 corepack enable
 pnpm install --frozen-lockfile
-pnpm --filter=v4 registry:build
 pnpm v4:build
 ```
 
-The registry build is required because the application consumes generated registry artifacts. Keep the generated output from the same source revision as the application build.
+The `v4:build` script builds the registry artifacts before compiling the Next.js application. Keep generated output and application code on the same source revision.
 
 ## Run the production server
 
