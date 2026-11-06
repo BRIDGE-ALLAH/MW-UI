@@ -73,7 +73,7 @@ pnpm --filter=v4 registry:build
 pnpm v4:dev
 ```
 
-The documentation and component experience will be available at `http://localhost:4000`. The app uses `NEXT_PUBLIC_APP_URL` as its canonical public URL; keep the local value in `apps/v4/.env.example` for development and set it to the deployed HTTPS origin in production so canonical metadata, sitemap, robots, RSS, and social links resolve correctly.
+The documentation and component experience will be available at `http://localhost:4000`. The production site is [ui.moonwitness.biz.id](https://ui.moonwitness.biz.id). The app uses `NEXT_PUBLIC_APP_URL` as its canonical public URL: use `http://localhost:4000` locally and `https://ui.moonwitness.biz.id` in production so canonical metadata, sitemap, robots, RSS, and social links resolve correctly.
 
 Useful commands:
 
