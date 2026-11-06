@@ -51,7 +51,7 @@ plans
 __screenshots__
 .codex-artifacts
 .registry-health
-.vercel
+.moonwitness-data/
 .tmp*
 
 CONTEXT.md
