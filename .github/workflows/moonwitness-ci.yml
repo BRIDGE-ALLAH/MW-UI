@@ -45,6 +45,9 @@ jobs:
       - name: Run quality checks
         run: pnpm check
 
+      - name: Typecheck maintenance scripts
+        run: pnpm --filter=v4 exec tsc --noEmit --project tsconfig.scripts.json
+
       - name: Validate public registry metadata
         run: pnpm validate:registries
 
