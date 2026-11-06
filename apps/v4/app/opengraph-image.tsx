@@ -4,10 +4,7 @@ import { MoonwitnessMark } from "@/components/moonwitness-mark"
 
 export const alt =
   "Moonwitness UI — The Interface Language of a Living Knowledge Ecosystem"
-export const size = {
-  width: 1200,
-  height: 630,
-}
+export const size = { width: 1200, height: 630 }
 export const contentType = "image/png"
 
 export default function Image() {
