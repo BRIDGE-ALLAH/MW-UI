@@ -44,7 +44,7 @@ Avoid generic space wallpaper as identity, excessive neon on dense text, decorat
 | Moon | `#9d4edd` | Secondary identity accent |
 | Muted | `#9e96b0` | Secondary text |
 
-These references are implemented as the default semantic palette in `apps/v4/app/globals.css`. The default light appearance uses warm paper and deep ink; the default dark appearance uses ink and violet-tinted surfaces with warm foreground text and yellow primary actions. User-selectable theme presets remain available and intentionally override the default palette.
+The semantic roles in `apps/v4/app/globals.css` provide the warm-paper and deep-ink reading foundation. Brand-specific colors are centralized as `--mw-*` tokens in `apps/v4/app/moonwitness-brand.css`. The default dark appearance uses ink and violet-tinted surfaces with warm foreground text and yellow primary actions. User-selectable theme presets remain available and intentionally override semantic component colors.
 
 Use semantic roles rather than applying hex values directly to components. Verify contrast in both appearances and all selectable presets. Pair status colors with text or accessible labels. Pink, cyan, and moon-purple are supporting accents, not replacements for semantic success, warning, or error states.
 
@@ -77,7 +77,7 @@ Canonical assets live in `apps/v4/public/brand/`:
 - `moonwitness-mark-mono.svg` — monochrome mark for single-color use.
 - `apps/v4/app/icon.svg` — app icon with its deep-ink tile.
 
-The React implementation is centralized in `apps/v4/components/moonwitness-mark.tsx`; use it in application surfaces instead of redrawing the symbol. Keep the app icon, header, project-builder welcome, and social previews visually aligned.
+The React implementation is centralized in `apps/v4/components/moonwitness-mark.tsx`; use it in application surfaces instead of redrawing the symbol. Keep the app icon, header, project-builder welcome, and social previews visually aligned. The main discovery surface uses the orbit motif; keep that motif restrained on documentation and dense operational screens.
 
 Do not imitate a religious seal, sacred calligraphy, official institutional insignia, or an existing third-party logo. Keep the wordmark separate from the symbol for compact placements.
 

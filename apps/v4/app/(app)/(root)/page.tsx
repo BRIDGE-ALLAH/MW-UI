@@ -85,9 +85,9 @@ export default function IndexPage() {
               <span className="mw-eyebrow-dot" />
               THE INTERFACE LANGUAGE OF A LIVING KNOWLEDGE ECOSYSTEM
             </div>
-            <h1 id="home-title" className="mw-hero-title">
+            <h1 id="home-title" aria-label={title} className="mw-hero-title">
               {title.split(". ").map((word, index) => (
-                <span key={word} className={index === 2 ? "mw-title-accent" : undefined}>
+                <span key={word} aria-hidden="true" className={index === 2 ? "mw-title-accent" : undefined}>
                   {word}{index < 2 ? "." : ""}
                 </span>
               ))}

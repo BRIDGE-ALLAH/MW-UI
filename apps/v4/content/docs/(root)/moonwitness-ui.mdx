@@ -23,6 +23,19 @@ The visual language brings together a celestial observatory, evidence-first edit
 
 Use expressive accents with restraint. Keep content legible. Make state explicit. Respect reduced motion. Never use color as the only carrier of meaning.
 
+## Visual identity
+
+The Moonwitness signature combines a crescent witness mark, a warm paper-and-ink foundation, and a measured signal palette:
+
+- **Ink** anchors high-focus surfaces and gives the identity its observatory character.
+- **Warm paper** keeps long-form reading approachable.
+- **Signal yellow** marks the primary brand accent and important moments of emphasis.
+- **Moon purple, signal cyan, and witness pink** add depth as supporting accents, not as substitutes for semantic status colors.
+
+The orbit motif belongs to brand and discovery surfaces. It should not be repeated as decoration inside dense operational interfaces. Use the centralized MoonwitnessMark component and canonical SVG assets rather than drawing alternate versions of the symbol.
+
+The implementation lives in apps/v4/app/moonwitness-brand.css for brand-level presentation and apps/v4/app/globals.css for shared semantic design roles. Components should continue to use semantic tokens such as background, foreground, primary, muted, border, and ring so that user-selected themes remain usable.
+
 ## Core principles
 
 1. Clarity before spectacle.
@@ -34,7 +47,7 @@ Use expressive accents with restraint. Keep content legible. Make state explicit
 
 ## Relationship to MoonUI
 
-Moonwitness UI is the product identity of this repository. The MoonWitness XV master design separately identifies **MoonUI / `@moonwitness/moonui`** as its certified shared design-system implementation.
+Moonwitness UI is the product identity of this repository. The MoonWitness XV master design separately identifies **MoonUI / @moonwitness/moonui** as its certified shared design-system implementation.
 
 These are related ecosystem efforts, not interchangeable package names. This repository currently retains its React, Next.js, Tailwind CSS, and shadcn-style registry foundation. Any migration to the certified MoonUI implementation must be agreed, tested, and documented by the relevant owners.
 

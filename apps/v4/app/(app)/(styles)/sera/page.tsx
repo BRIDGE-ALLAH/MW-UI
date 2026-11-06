@@ -49,7 +49,7 @@ export default function SeraPage() {
         <PageActions className="**:[.container]:justify-start">
           <Button asChild size="sm">
             <Link href="/create?preset=b4xFeBLg4O">
-              Open in shadcn/create
+              Customize this style
               <ArrowRightIcon data-icon="inline-end" />
             </Link>
           </Button>
