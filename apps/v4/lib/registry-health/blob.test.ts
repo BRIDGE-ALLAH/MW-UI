@@ -149,10 +149,11 @@ describe("local registry health storage", () => {
       )
 
       const now = new Date("2026-08-24T12:00:00.000Z")
-      const oldTime = new Date("2026-08-01T00:00:00.000Z")
+      const oldRunTime = new Date("2026-08-01T00:00:00.000Z")
+      const oldDailyTime = new Date("2026-04-01T00:00:00.000Z")
       await Promise.all([
-        fs.utimes(oldRun, oldTime, oldTime),
-        fs.utimes(oldDaily, oldTime, oldTime),
+        fs.utimes(oldRun, oldRunTime, oldRunTime),
+        fs.utimes(oldDaily, oldDailyTime, oldDailyTime),
         fs.utimes(recentRun, now, now),
       ])
 
