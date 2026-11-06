@@ -1,39 +1,20 @@
-import { describe, expect, it, vi } from "vitest"
+import { promises as fs } from "node:fs"
+import os from "node:os"
+import path from "node:path"
+
+import { describe, expect, it } from "vitest"
 
 import {
   cleanRegistryHealthHistory,
   loadRegistryHealthSnapshot,
   loadRegistryMonitorState,
   publishRegistryHealth,
-  type BlobOperations,
 } from "./blob"
 import type {
   RegistryHealthSnapshot,
   RegistryMonitorRun,
   RegistryMonitorState,
 } from "./schema"
-
-function streamJson(value: unknown) {
-  const bytes = new TextEncoder().encode(JSON.stringify(value))
-  return new ReadableStream<Uint8Array>({
-    start(controller) {
-      controller.enqueue(bytes)
-      controller.close()
-    },
-  })
-}
-
-function createOperations(overrides: Partial<BlobOperations> = {}) {
-  return {
-    get: vi.fn(async () => null),
-    put: vi.fn(async (pathname) => ({
-      url: `https://blob.example.com/${pathname}`,
-    })),
-    list: vi.fn(async () => ({ blobs: [], hasMore: false })),
-    del: vi.fn(async () => {}),
-    ...overrides,
-  } satisfies BlobOperations
-}
 
 const STATE: RegistryMonitorState = {
   schemaVersion: 1,
@@ -73,132 +54,128 @@ const RUN: RegistryMonitorRun = {
   diagnostics: [],
 }
 
-describe("loadRegistryMonitorState", () => {
-  it("returns null on the first run", async () => {
-    const state = await loadRegistryMonitorState({
-      token: "test-token",
-      operations: createOperations(),
-    })
+async function withDataDirectory(run: (dataDir: string) => Promise<void>) {
+  const dataDir = await fs.mkdtemp(path.join(os.tmpdir(), "moonwitness-health-"))
+  try {
+    await run(dataDir)
+  } finally {
+    await fs.rm(dataDir, { recursive: true, force: true })
+  }
+}
 
-    expect(state).toBeNull()
+describe("local registry health storage", () => {
+  it("returns null when no state or snapshot has been published", async () => {
+    await withDataDirectory(async (dataDir) => {
+      await expect(loadRegistryMonitorState({ dataDir })).resolves.toBeNull()
+      await expect(loadRegistryHealthSnapshot({ dataDir })).resolves.toBeNull()
+    })
   })
 
-  it("validates stored state before using it", async () => {
-    const operations = createOperations({
-      get: vi.fn(async () => ({ stream: streamJson(STATE) })),
-    })
-
-    await expect(
-      loadRegistryMonitorState({ token: "test-token", operations })
-    ).resolves.toEqual(STATE)
-    expect(operations.get).toHaveBeenCalledWith(
-      "registry-health/v1/state.json",
-      {
-        access: "private",
-        token: "test-token",
-        useCache: false,
-      }
-    )
-  })
-})
-
-describe("loadRegistryHealthSnapshot", () => {
-  it("reads and validates the private latest snapshot", async () => {
-    const abortController = new AbortController()
-    const operations = createOperations({
-      get: vi.fn(async () => ({ stream: streamJson(SNAPSHOT) })),
-    })
-
-    await expect(
-      loadRegistryHealthSnapshot({
-        token: "test-token",
-        storeId: "test-store-id",
-        abortSignal: abortController.signal,
-        operations,
+  it("publishes and validates state and the latest snapshot", async () => {
+    await withDataDirectory(async (dataDir) => {
+      await publishRegistryHealth({
+        state: STATE,
+        snapshot: SNAPSHOT,
+        run: RUN,
+        dataDir,
       })
-    ).resolves.toEqual(SNAPSHOT)
-    expect(operations.get).toHaveBeenCalledWith(
-      "registry-health/v1/latest.json",
-      {
-        access: "private",
-        token: "test-token",
-        storeId: "test-store-id",
-        useCache: false,
-        abortSignal: abortController.signal,
-      }
-    )
-  })
 
-  it("rejects an invalid latest snapshot", async () => {
-    const operations = createOperations({
-      get: vi.fn(async () => ({
-        stream: streamJson({ ...SNAPSHOT, schemaVersion: 2 }),
-      })),
+      await expect(loadRegistryMonitorState({ dataDir })).resolves.toEqual(
+        STATE
+      )
+      await expect(loadRegistryHealthSnapshot({ dataDir })).resolves.toEqual(
+        SNAPSHOT
+      )
     })
-
-    await expect(
-      loadRegistryHealthSnapshot({ token: "test-token", operations })
-    ).rejects.toThrow()
   })
-})
 
-describe("publishRegistryHealth", () => {
-  it("publishes immutable history before overwriting state and latest", async () => {
-    const operations = createOperations()
-    const result = await publishRegistryHealth({
-      state: STATE,
-      snapshot: SNAPSHOT,
-      run: RUN,
-      token: "test-token",
-      operations,
+  it("rejects invalid stored snapshots", async () => {
+    await withDataDirectory(async (dataDir) => {
+      const latestPath = path.join(dataDir, "registry-health/v1/latest.json")
+      await fs.mkdir(path.dirname(latestPath), { recursive: true })
+      await fs.writeFile(
+        latestPath,
+        JSON.stringify({ ...SNAPSHOT, schemaVersion: 2 })
+      )
+
+      await expect(loadRegistryHealthSnapshot({ dataDir })).rejects.toThrow()
     })
-    const calls = vi.mocked(operations.put).mock.calls
-
-    expect(calls.map(([pathname]) => pathname)).toEqual([
-      "registry-health/v1/runs/2026-08-24T12-00-00-000Z.json",
-      "registry-health/v1/daily/2026-08-24.json",
-      "registry-health/v1/state.json",
-      "registry-health/v1/latest.json",
-    ])
-    expect(calls[0][2].allowOverwrite).toBe(false)
-    expect(calls[2][2].allowOverwrite).toBe(true)
-    expect(calls[3][2].allowOverwrite).toBe(true)
-    expect(calls.every(([, , options]) => options.access === "private")).toBe(
-      true
-    )
-    expect(result.latestPath).toBe("registry-health/v1/latest.json")
   })
-})
 
-describe("cleanRegistryHealthHistory", () => {
-  it("paginates listings and deletes expired history", async () => {
-    const list = vi
-      .fn()
-      .mockResolvedValueOnce({
-        blobs: [
-          {
-            pathname: "registry-health/v1/runs/old.json",
-            uploadedAt: new Date("2026-08-01T00:00:00.000Z"),
-          },
-        ],
-        cursor: "next",
-        hasMore: true,
+  it("keeps immutable run history and overwrites daily, state, and latest files", async () => {
+    await withDataDirectory(async (dataDir) => {
+      const result = await publishRegistryHealth({
+        state: STATE,
+        snapshot: SNAPSHOT,
+        run: RUN,
+        dataDir,
       })
-      .mockResolvedValueOnce({ blobs: [], hasMore: false })
-      .mockResolvedValueOnce({ blobs: [], hasMore: false })
-    const operations = createOperations({ list })
+      const root = path.join(dataDir, "registry-health/v1")
 
-    const result = await cleanRegistryHealthHistory({
-      token: "test-token",
-      now: new Date("2026-08-24T12:00:00.000Z"),
-      operations,
+      await expect(
+        fs.readFile(
+          path.join(root, "runs/2026-08-24T12-00-00-000Z.json"),
+          "utf8"
+        )
+      ).resolves.toContain('"mode":"hourly"')
+      await expect(
+        fs.readFile(path.join(root, "daily/2026-08-24.json"), "utf8")
+      ).resolves.toContain('"date":"2026-08-24"')
+      expect(result.latestPath).toBe("registry-health/v1/latest.json")
+
+      await expect(
+        publishRegistryHealth({
+          state: STATE,
+          snapshot: SNAPSHOT,
+          run: RUN,
+          dataDir,
+        })
+      ).rejects.toThrow()
     })
+  })
 
-    expect(list).toHaveBeenCalledTimes(3)
-    expect(operations.del).toHaveBeenCalledWith(
-      ["registry-health/v1/runs/old.json"],
-      { token: "test-token" }
-    )
-    expect(result.deleted).toBe(1)
+  it("deletes expired run and daily history while preserving recent files", async () => {
+    await withDataDirectory(async (dataDir) => {
+      const runDirectory = path.join(dataDir, "registry-health/v1/runs")
+      const dailyDirectory = path.join(dataDir, "registry-health/v1/daily")
+      await fs.mkdir(runDirectory, { recursive: true })
+      await fs.mkdir(dailyDirectory, { recursive: true })
+
+      const oldRun = path.join(runDirectory, "old.json")
+      const recentRun = path.join(runDirectory, "recent.json")
+      const oldDaily = path.join(dailyDirectory, "old.json")
+      await Promise.all(
+        [oldRun, recentRun, oldDaily].map((file) => fs.writeFile(file, "{}"))
+      )
+
+      const now = new Date("2026-08-24T12:00:00.000Z")
+      const oldTime = new Date("2026-08-01T00:00:00.000Z")
+      await Promise.all([
+        fs.utimes(oldRun, oldTime, oldTime),
+        fs.utimes(oldDaily, oldTime, oldTime),
+        fs.utimes(recentRun, now, now),
+      ])
+
+      const result = await cleanRegistryHealthHistory({ dataDir, now })
+
+      expect(result.deleted).toBe(2)
+      await expect(fs.access(oldRun)).rejects.toThrow()
+      await expect(fs.access(oldDaily)).rejects.toThrow()
+      await expect(fs.access(recentRun)).resolves.toBeUndefined()
+    })
+  })
+
+  it("rejects aborted snapshot reads", async () => {
+    await withDataDirectory(async (dataDir) => {
+      const controller = new AbortController()
+      controller.abort(new Error("cancelled"))
+
+      await expect(
+        loadRegistryHealthSnapshot({
+          dataDir,
+          abortSignal: controller.signal,
+        })
+      ).rejects.toThrow("cancelled")
+    })
   })
 })
