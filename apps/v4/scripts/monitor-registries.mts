@@ -41,17 +41,17 @@ function getArgument(name: string) {
   if (index >= 0) {
     const value = process.argv[index + 1]
     if (!value || value.startsWith("--")) {
-      throw new Error(\`Missing value for \${name}\`)
+      throw new Error(`Missing value for ${name}`)
     }
     return value
   }
 
-  const argument = process.argv.find((value) => value.startsWith(\`\${name}=\`))
+  const argument = process.argv.find((value) => value.startsWith(`${name}=`))
   if (!argument) return undefined
 
   const value = argument.slice(name.length + 1)
   if (!value) {
-    throw new Error(\`Missing value for \${name}\`)
+    throw new Error(`Missing value for ${name}`)
   }
   return value
 }
@@ -61,7 +61,7 @@ function getPhase() {
   if (!value) return null
 
   if (!PHASES.has(value as MonitorPhase)) {
-    throw new Error(\`Invalid monitor phase: \${value}\`)
+    throw new Error(`Invalid monitor phase: ${value}`)
   }
 
   return value as MonitorPhase
@@ -72,7 +72,7 @@ function getMode() {
   const mode = (value ?? "auto") as RegistryMonitorMode
 
   if (!MODES.has(mode)) {
-    throw new Error(\`Invalid monitor mode: \${value}\`)
+    throw new Error(`Invalid monitor mode: ${value}`)
   }
 
   return mode
@@ -84,7 +84,7 @@ async function readJson(pathname: string) {
 
 async function writeJson(pathname: string, value: unknown) {
   await fs.mkdir(path.dirname(pathname), { recursive: true })
-  const temporaryPath = \`\${pathname}.\${process.pid}.tmp\`
+  const temporaryPath = `${pathname}.${process.pid}.tmp`
   await fs.writeFile(temporaryPath, JSON.stringify(value))
   await fs.rename(temporaryPath, pathname)
 }
@@ -114,23 +114,23 @@ async function writeStepSummary({
   const rows = [
     "## Registry health monitor",
     "",
-    \`- Mode: \\\`\${mode}\\\`\`,
-    \`- Registries: \${totals.registries}\`,
-    \`- Reachable indexes: \${totals.reachable}\`,
-    \`- Unavailable indexes: \${totals.unavailable}\`,
-    \`- Bot challenges: \${totals.challenges}\`,
-    \`- Item checks: \${totals.itemChecks}\`,
-    \`- Dry runs: \${totals.dryRuns}\`,
-    \`- Expired history deleted: \${deleted}\`,
-    \`- Latest snapshot: \${latestPath}\`,
+    `- Mode: \\`${mode}\\``,
+    `- Registries: ${totals.registries}`,
+    `- Reachable indexes: ${totals.reachable}`,
+    `- Unavailable indexes: ${totals.unavailable}`,
+    `- Bot challenges: ${totals.challenges}`,
+    `- Item checks: ${totals.itemChecks}`,
+    `- Dry runs: ${totals.dryRuns}`,
+    `- Expired history deleted: ${deleted}`,
+    `- Latest snapshot: ${latestPath}`,
   ]
 
   if (diagnostics.length > 0) {
     rows.push("", "### Diagnostics", "")
-    rows.push(...diagnostics.map((diagnostic) => \`- \${diagnostic}\`))
+    rows.push(...diagnostics.map((diagnostic) => `- ${diagnostic}`))
   }
 
-  await fs.appendFile(process.env.GITHUB_STEP_SUMMARY, \`\${rows.join("\\n")}\\n\`)
+  await fs.appendFile(process.env.GITHUB_STEP_SUMMARY, `${rows.join("\\n")}\\n`)
 }
 
 async function prepareMonitor() {
@@ -168,7 +168,7 @@ async function checkRegistries() {
 
   await writeJson(MONITOR_OUTPUT_PATH, result)
   console.log(
-    \`Registry checks completed for \${result.run.totals.registries} registries.\`
+    `Registry checks completed for ${result.run.totals.registries} registries.`
   )
 }
 
@@ -192,7 +192,7 @@ async function publishMonitor() {
     deleted: cleanup.deleted,
   })
   await fs.rm(WORK_DIRECTORY, { recursive: true, force: true })
-  console.log(\`Registry health snapshot saved: \${publication.latestPath}\`)
+  console.log(`Registry health snapshot saved: ${publication.latestPath}`)
 }
 
 async function runPackageScript(
@@ -219,7 +219,7 @@ async function runPackageScript(
 
       reject(
         new Error(
-          \`\${script} failed with \${signal ? \`signal \${signal}\` : \`exit code \${code}\`}\`
+          `${script} failed with ${signal ? `signal ${signal}` : `exit code ${code}`}`
         )
       )
     })
