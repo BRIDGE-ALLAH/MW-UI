@@ -36,6 +36,13 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      # Generate workspace packages and registry styles before typechecking.
+      # The app's TypeScript project imports generated registry artifacts.
+      - name: Build workspace packages and registry styles
+        run: |
+          pnpm build:packages
+          pnpm --filter=v4 registry:build --style all
+
       - name: Run lint, typecheck, and formatting checks
         run: pnpm check
 
