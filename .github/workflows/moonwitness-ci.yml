@@ -45,6 +45,12 @@ jobs:
       - name: Run quality checks
         run: pnpm check
 
+      - name: Validate public registry metadata
+        run: pnpm validate:registries
+
+      - name: Test self-hosted registry health storage
+        run: pnpm --filter=v4 exec vitest run lib/registry-health/blob.test.ts
+
   production-build:
     name: Production build
     runs-on: ubuntu-latest
