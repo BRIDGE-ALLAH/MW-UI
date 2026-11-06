@@ -11,8 +11,8 @@ import {
 } from "./schema"
 
 const STORAGE_PREFIX = "registry-health/v1"
-const STATE_PATH = \`\${STORAGE_PREFIX}/state.json\`
-const LATEST_PATH = \`\${STORAGE_PREFIX}/latest.json\`
+const STATE_PATH = `${STORAGE_PREFIX}/state.json`
+const LATEST_PATH = `${STORAGE_PREFIX}/latest.json`
 
 function getDataDirectory(dataDir?: string) {
   return path.resolve(
@@ -25,7 +25,7 @@ function getDataDirectory(dataDir?: string) {
 function resolveStoragePath(dataDir: string | undefined, pathname: string) {
   const root = getDataDirectory(dataDir)
   const resolved = path.resolve(root, ...pathname.split("/"))
-  if (resolved !== root && !resolved.startsWith(\`\${root}\${path.sep}\`)) {
+  if (resolved !== root && !resolved.startsWith(`${root}${path.sep}`)) {
     throw new Error("Invalid registry health storage path.")
   }
   return resolved
@@ -64,7 +64,7 @@ async function writeStoredJson(
     return
   }
 
-  const temporaryPath = \`\${filePath}.\${process.pid}.\${randomUUID()}.tmp\`
+  const temporaryPath = `${filePath}.${process.pid}.${randomUUID()}.tmp`
   try {
     await fs.writeFile(temporaryPath, body, {
       encoding: "utf8",
@@ -146,11 +146,11 @@ export async function loadRegistryHealthSnapshot({
 
 function getRunPath(run: RegistryMonitorRun) {
   const timestamp = run.startedAt.replaceAll(":", "-").replaceAll(".", "-")
-  return \`\${STORAGE_PREFIX}/runs/\${timestamp}.json\`
+  return `${STORAGE_PREFIX}/runs/${timestamp}.json`
 }
 
 function getDailyPath(snapshot: RegistryHealthSnapshot) {
-  return \`\${STORAGE_PREFIX}/daily/\${snapshot.generatedAt.slice(0, 10)}.json\`
+  return `${STORAGE_PREFIX}/daily/${snapshot.generatedAt.slice(0, 10)}.json`
 }
 
 function getDailyDocument(
@@ -208,8 +208,8 @@ export async function cleanRegistryHealthHistory({
   now?: Date
 } = {}) {
   const policies = [
-    { prefix: \`\${STORAGE_PREFIX}/runs\`, retentionDays: 14 },
-    { prefix: \`\${STORAGE_PREFIX}/daily\`, retentionDays: 90 },
+    { prefix: `${STORAGE_PREFIX}/runs`, retentionDays: 14 },
+    { prefix: `${STORAGE_PREFIX}/daily`, retentionDays: 90 },
   ]
   const stale: string[] = []
 
