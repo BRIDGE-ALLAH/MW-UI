@@ -91,6 +91,7 @@ Configure HTTPS with your host's certificate automation (for example, Certbot) a
 - [ ] `pnpm v4:build` completes successfully.
 - [ ] The process manager starts the app and restores it after reboot.
 - [ ] The reverse proxy forwards the original host and HTTPS protocol.
+- [ ] `/api/health` returns HTTP 200 for uptime monitoring.
 - [ ] `/robots.txt`, `/sitemap.xml`, and the RSS feed use the production origin.
 - [ ] Logs, backups, monitoring, and security updates are configured.
 
