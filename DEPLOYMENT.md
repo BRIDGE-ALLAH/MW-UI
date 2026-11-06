@@ -80,6 +80,12 @@ server {
 }
 ```
 
+Before starting the service, create the persistent data directory with the service account as owner:
+
+```bash
+sudo install -d -o moonwitness -g moonwitness -m 0750 /var/lib/moonwitness-ui/data
+```
+
 Configure HTTPS with your host's certificate automation (for example, Certbot) and redirect HTTP to HTTPS after the certificate is active.
 
 ## Release checklist
