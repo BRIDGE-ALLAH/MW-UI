@@ -1,9 +1,6 @@
-import {
-  del as deleteBlob,
-  get as getBlob,
-  list as listBlobs,
-  put as putBlob,
-} from "@vercel/blob"
+import { randomUUID } from "node:crypto"
+import { promises as fs } from "node:fs"
+import path from "node:path"
 
 import {
   registryHealthSnapshotSchema,
@@ -13,129 +10,147 @@ import {
   type RegistryMonitorState,
 } from "./schema"
 
-const BLOB_PREFIX = "registry-health/v1"
-const STATE_PATH = `${BLOB_PREFIX}/state.json`
-const LATEST_PATH = `${BLOB_PREFIX}/latest.json`
+const STORAGE_PREFIX = "registry-health/v1"
+const STATE_PATH = `${STORAGE_PREFIX}/state.json`
+const LATEST_PATH = `${STORAGE_PREFIX}/latest.json`
 
-type BlobListItem = {
-  pathname: string
-  uploadedAt: Date
+function getDataDirectory(dataDir?: string) {
+  return path.resolve(
+    dataDir ??
+      process.env.MOONWITNESS_DATA_DIR ??
+      path.join(process.cwd(), ".moonwitness-data")
+  )
 }
 
-type BlobOperations = {
-  get: (
-    pathname: string,
-    options: {
-      access: "private"
-      token?: string
-      storeId?: string
-      useCache: false
-      abortSignal?: AbortSignal
+function resolveStoragePath(dataDir: string | undefined, pathname: string) {
+  const root = getDataDirectory(dataDir)
+  const resolved = path.resolve(root, ...pathname.split("/"))
+  if (resolved !== root && !resolved.startsWith(`${root}${path.sep}`)) {
+    throw new Error("Invalid registry health storage path.")
+  }
+  return resolved
+}
+
+async function readStoredJson(pathname: string, dataDir?: string) {
+  try {
+    return JSON.parse(
+      await fs.readFile(resolveStoragePath(dataDir, pathname), "utf8")
+    ) as unknown
+  } catch (error) {
+    if (
+      error &&
+      typeof error === "object" &&
+      "code" in error &&
+      error.code === "ENOENT"
+    ) {
+      return null
     }
-  ) => Promise<{ stream: ReadableStream<Uint8Array> | null } | null>
-  put: (
-    pathname: string,
-    body: string,
-    options: {
-      access: "private"
-      token?: string
-      addRandomSuffix: false
-      allowOverwrite?: boolean
-      cacheControlMaxAge: number
-      contentType: "application/json"
-    }
-  ) => Promise<{ url: string }>
-  list: (options: {
-    prefix: string
-    cursor?: string
-    limit: number
-    token?: string
-  }) => Promise<{
-    blobs: BlobListItem[]
-    cursor?: string
-    hasMore: boolean
-  }>
-  del: (pathnames: string[], options: { token?: string }) => Promise<void>
+    throw error
+  }
 }
 
-const defaultOperations: BlobOperations = {
-  get: getBlob,
-  put: putBlob,
-  list: listBlobs,
-  del: deleteBlob,
-}
+async function writeStoredJson(
+  pathname: string,
+  value: unknown,
+  dataDir: string | undefined,
+  allowOverwrite = false
+) {
+  const filePath = resolveStoragePath(dataDir, pathname)
+  await fs.mkdir(path.dirname(filePath), { recursive: true })
+  const body = JSON.stringify(value)
 
-async function readJsonStream(stream: ReadableStream<Uint8Array>) {
-  const reader = stream.getReader()
-  const chunks: Uint8Array[] = []
-  let size = 0
-
-  while (true) {
-    const { done, value } = await reader.read()
-    if (done) break
-    chunks.push(value)
-    size += value.byteLength
+  if (!allowOverwrite) {
+    await fs.writeFile(filePath, body, { encoding: "utf8", flag: "wx" })
+    return
   }
 
-  const body = new Uint8Array(size)
-  let offset = 0
-  for (const chunk of chunks) {
-    body.set(chunk, offset)
-    offset += chunk.byteLength
+  const temporaryPath = `${filePath}.${process.pid}.${randomUUID()}.tmp`
+  try {
+    await fs.writeFile(temporaryPath, body, {
+      encoding: "utf8",
+      flag: "wx",
+    })
+    await fs.rename(temporaryPath, filePath)
+  } catch (error) {
+    await fs.rm(temporaryPath, { force: true }).catch(() => {})
+    throw error
+  }
+}
+
+async function listStoredFiles(prefix: string, dataDir?: string) {
+  const directory = resolveStoragePath(dataDir, prefix)
+  const files: { pathname: string; modifiedAt: Date }[] = []
+
+  async function walk(currentDirectory: string) {
+    let entries
+    try {
+      entries = await fs.readdir(currentDirectory, { withFileTypes: true })
+    } catch (error) {
+      if (
+        error &&
+        typeof error === "object" &&
+        "code" in error &&
+        error.code === "ENOENT"
+      ) {
+        return
+      }
+      throw error
+    }
+
+    for (const entry of entries) {
+      const fullPath = path.join(currentDirectory, entry.name)
+      if (entry.isDirectory()) {
+        await walk(fullPath)
+        continue
+      }
+      if (!entry.isFile()) continue
+
+      const stats = await fs.stat(fullPath)
+      files.push({
+        pathname: path.posix.join(
+          prefix,
+          path.relative(directory, fullPath).split(path.sep).join("/")
+        ),
+        modifiedAt: stats.mtime,
+      })
+    }
   }
 
-  return JSON.parse(new TextDecoder().decode(body)) as unknown
+  await walk(directory)
+  return files
 }
 
 export async function loadRegistryMonitorState({
-  token,
-  operations = defaultOperations,
+  dataDir,
 }: {
-  token?: string
-  operations?: BlobOperations
-}) {
-  const result = await operations.get(STATE_PATH, {
-    access: "private",
-    token,
-    useCache: false,
-  })
-
-  if (!result?.stream) return null
-
-  return registryMonitorStateSchema.parse(await readJsonStream(result.stream))
+  dataDir?: string
+} = {}) {
+  const value = await readStoredJson(STATE_PATH, dataDir)
+  return value === null ? null : registryMonitorStateSchema.parse(value)
 }
 
 export async function loadRegistryHealthSnapshot({
-  token,
-  storeId,
+  dataDir,
   abortSignal,
-  operations = defaultOperations,
 }: {
-  token?: string
-  storeId?: string
+  dataDir?: string
   abortSignal?: AbortSignal
-  operations?: BlobOperations
-}) {
-  const result = await operations.get(LATEST_PATH, {
-    access: "private",
-    token,
-    storeId,
-    useCache: false,
-    abortSignal,
-  })
+} = {}) {
+  if (abortSignal?.aborted) {
+    throw abortSignal.reason ?? new Error("Registry health read was aborted.")
+  }
 
-  if (!result?.stream) return null
-
-  return registryHealthSnapshotSchema.parse(await readJsonStream(result.stream))
+  const value = await readStoredJson(LATEST_PATH, dataDir)
+  return value === null ? null : registryHealthSnapshotSchema.parse(value)
 }
 
 function getRunPath(run: RegistryMonitorRun) {
   const timestamp = run.startedAt.replaceAll(":", "-").replaceAll(".", "-")
-  return `${BLOB_PREFIX}/runs/${timestamp}.json`
+  return `${STORAGE_PREFIX}/runs/${timestamp}.json`
 }
 
 function getDailyPath(snapshot: RegistryHealthSnapshot) {
-  return `${BLOB_PREFIX}/daily/${snapshot.generatedAt.slice(0, 10)}.json`
+  return `${STORAGE_PREFIX}/daily/${snapshot.generatedAt.slice(0, 10)}.json`
 }
 
 function getDailyDocument(
@@ -161,134 +176,58 @@ function getDailyDocument(
   }
 }
 
-async function putJson({
-  pathname,
-  value,
-  token,
-  allowOverwrite = false,
-  operations,
-}: {
-  pathname: string
-  value: unknown
-  token?: string
-  allowOverwrite?: boolean
-  operations: BlobOperations
-}) {
-  return operations.put(pathname, JSON.stringify(value), {
-    access: "private",
-    token,
-    addRandomSuffix: false,
-    allowOverwrite,
-    cacheControlMaxAge: 60,
-    contentType: "application/json",
-  })
-}
-
 export async function publishRegistryHealth({
   state,
   snapshot,
   run,
-  token,
-  operations = defaultOperations,
+  dataDir,
 }: {
   state: RegistryMonitorState
   snapshot: RegistryHealthSnapshot
   run: RegistryMonitorRun
-  token?: string
-  operations?: BlobOperations
+  dataDir?: string
 }) {
-  await putJson({
-    pathname: getRunPath(run),
-    value: run,
-    token,
-    operations,
-  })
-  await putJson({
-    pathname: getDailyPath(snapshot),
-    value: getDailyDocument(state, snapshot),
-    token,
-    allowOverwrite: true,
-    operations,
-  })
-  await putJson({
-    pathname: STATE_PATH,
-    value: state,
-    token,
-    allowOverwrite: true,
-    operations,
-  })
-  await putJson({
-    pathname: LATEST_PATH,
-    value: snapshot,
-    token,
-    allowOverwrite: true,
-    operations,
-  })
+  await writeStoredJson(getRunPath(run), run, dataDir)
+  await writeStoredJson(
+    getDailyPath(snapshot),
+    getDailyDocument(state, snapshot),
+    dataDir,
+    true
+  )
+  await writeStoredJson(STATE_PATH, state, dataDir, true)
+  await writeStoredJson(LATEST_PATH, snapshot, dataDir, true)
 
   return { latestPath: LATEST_PATH }
 }
 
-async function listAll({
-  prefix,
-  token,
-  operations,
-}: {
-  prefix: string
-  token?: string
-  operations: BlobOperations
-}) {
-  const blobs: BlobListItem[] = []
-  let cursor: string | undefined
-
-  do {
-    const page = await operations.list({
-      prefix,
-      cursor,
-      limit: 1000,
-      token,
-    })
-    blobs.push(...page.blobs)
-    cursor = page.hasMore ? page.cursor : undefined
-  } while (cursor)
-
-  return blobs
-}
-
 export async function cleanRegistryHealthHistory({
-  token,
+  dataDir,
   now = new Date(),
-  operations = defaultOperations,
 }: {
-  token?: string
+  dataDir?: string
   now?: Date
-  operations?: BlobOperations
-}) {
+} = {}) {
   const policies = [
-    { prefix: `${BLOB_PREFIX}/runs/`, retentionDays: 14 },
-    { prefix: `${BLOB_PREFIX}/daily/`, retentionDays: 90 },
+    { prefix: `${STORAGE_PREFIX}/runs`, retentionDays: 14 },
+    { prefix: `${STORAGE_PREFIX}/daily`, retentionDays: 90 },
   ]
   const stale: string[] = []
 
   for (const policy of policies) {
-    const blobs = await listAll({
-      prefix: policy.prefix,
-      token,
-      operations,
-    })
+    const files = await listStoredFiles(policy.prefix, dataDir)
     const cutoff = now.getTime() - policy.retentionDays * 24 * 60 * 60 * 1000
     stale.push(
-      ...blobs
-        .filter((blob) => blob.uploadedAt.getTime() < cutoff)
-        .map((blob) => blob.pathname)
+      ...files
+        .filter((file) => file.modifiedAt.getTime() < cutoff)
+        .map((file) => file.pathname)
     )
   }
 
-  for (let index = 0; index < stale.length; index += 100) {
-    await operations.del(stale.slice(index, index + 100), { token })
+  for (const pathname of stale) {
+    await fs.rm(resolveStoragePath(dataDir, pathname), { force: true })
   }
 
   return { deleted: stale.length }
 }
 
-export { BLOB_PREFIX, LATEST_PATH, STATE_PATH }
-export type { BlobOperations }
+export { LATEST_PATH, STATE_PATH, STORAGE_PREFIX }

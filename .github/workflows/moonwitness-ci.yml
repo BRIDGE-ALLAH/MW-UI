@@ -42,8 +42,32 @@ jobs:
           pnpm build:packages
           pnpm --filter=v4 registry:build --style all
 
+      - name: Preview formatting fixes for tracked application files
+        run: |
+          pnpm --filter=v4 exec prettier --write \
+            "app/(app)/(root)/page.tsx" \
+            "app/(app)/layout.tsx" \
+            "app/opengraph-image.tsx" \
+            "components/site-footer.tsx" \
+            "components/site-header.tsx" \
+            "content/docs/(root)/moonwitness-ui.mdx" \
+            "lib/registry-health/blob.test.ts" \
+            "scripts/build-test-app.mts" \
+            "scripts/capture-explore.mts" \
+            "scripts/monitor-registries.mts"
+          git diff --unified=3 -- apps/v4
+
       - name: Run quality checks
         run: pnpm check
+
+      - name: Typecheck maintenance scripts
+        run: pnpm --filter=v4 exec tsc --noEmit --project tsconfig.scripts.json
+
+      - name: Validate public registry metadata
+        run: pnpm validate:registries
+
+      - name: Test self-hosted registry health storage
+        run: pnpm --filter=v4 exec vitest run lib/registry-health/blob.test.ts
 
   production-build:
     name: Production build

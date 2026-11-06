@@ -4,10 +4,7 @@ type MoonwitnessMarkProps = SVGProps<SVGSVGElement> & {
   size?: number
 }
 
-export function MoonwitnessMark({
-  size = 64,
-  ...props
-}: MoonwitnessMarkProps) {
+export function MoonwitnessMark({ size = 64, ...props }: MoonwitnessMarkProps) {
   return (
     <svg
       aria-hidden="true"
