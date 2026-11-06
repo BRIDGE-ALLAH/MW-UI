@@ -1,16 +1,22 @@
+import { MoonwitnessMark } from "@/components/moonwitness-mark"
 import { siteConfig } from "@/lib/config"
 
 export function SiteFooter() {
   return (
     <footer className="group-has-[.docs-nav]/body:pb-20 group-has-[.section-soft]/body:bg-surface/40 group-has-[[data-slot=designer]]/body:hidden group-has-[[data-slot=docs]]/body:hidden group-has-[.docs-nav]/body:sm:pb-0 dark:bg-transparent dark:group-has-[.section-soft]/body:bg-surface/40 3xl:fixed:bg-transparent">
       <div className="container-wrapper px-4 xl:px-6">
-        <div className="flex min-h-(--footer-height) items-center justify-center py-4">
-          <div className="w-full px-1 text-center text-xs leading-loose text-muted-foreground sm:text-sm">
-            <span className="font-medium text-foreground">
-              Moonwitness UI
-            </span>{" "}
-            — Observe. Understand. Preserve.{" "}
-            <span className="mx-1">·</span>
+        <div className="flex min-h-(--footer-height) flex-col items-center justify-center gap-2 py-5 text-center sm:flex-row sm:justify-between">
+          <div className="flex items-center gap-2 text-xs text-muted-foreground sm:text-sm">
+            <span className="mw-brand-symbol size-7">
+              <MoonwitnessMark size={21} />
+            </span>
+            <span>
+              <span className="font-semibold text-foreground">Moonwitness UI</span>
+              <span className="mx-1.5">·</span>
+              Observe. Understand. Preserve.
+            </span>
+          </div>
+          <div className="flex flex-wrap items-center justify-center gap-x-3 text-xs text-muted-foreground sm:text-sm">
             <a
               href={siteConfig.links.github}
               target="_blank"
@@ -19,7 +25,7 @@ export function SiteFooter() {
             >
               Source on GitHub
             </a>
-            <span className="mx-1">·</span>
+            <span aria-hidden="true">·</span>
             <a
               href={siteConfig.links.upstream}
               target="_blank"

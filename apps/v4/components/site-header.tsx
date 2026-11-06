@@ -20,7 +20,7 @@ export function SiteHeader() {
   const pageTree = source.pageTree
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-background">
+    <header className="mw-site-header sticky top-0 z-50 w-full">
       <div className="container-wrapper px-6 group-has-data-[slot=designer]/layout:max-w-none 3xl:fixed:px-0">
         <div className="flex h-(--header-height) items-center **:data-[slot=separator]:h-4! group-has-data-[slot=designer]/layout:fixed:max-w-none 3xl:fixed:container">
           <MobileNav
@@ -31,13 +31,13 @@ export function SiteHeader() {
           <Link
             href="/"
             aria-label="Moonwitness UI home"
-            className="mr-5 inline-flex shrink-0 items-center gap-2 rounded-md font-semibold tracking-tight focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className="mr-5 inline-flex shrink-0 items-center gap-2.5 rounded-md font-semibold tracking-tight focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
-            <span className="inline-flex size-8 items-center justify-center rounded-lg bg-[var(--mw-ink)] text-[var(--mw-accent)]">
-              <MoonwitnessMark size={24} />
+            <span className="mw-brand-symbol">
+              <MoonwitnessMark size={25} />
             </span>
-            <span className="hidden sm:inline">
-              Moonwitness <span className="text-muted-foreground">UI</span>
+            <span className="mw-brand-name hidden sm:inline">
+              Moonwitness <span>UI</span>
             </span>
           </Link>
           <MainNav items={siteConfig.navItems} className="hidden lg:flex" />
