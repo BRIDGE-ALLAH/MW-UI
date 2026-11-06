@@ -10,7 +10,7 @@ Set the canonical public URL in the application environment:
 NEXT_PUBLIC_APP_URL=https://ui.moonwitness.biz.id
 ```
 
-Create `apps/v4/.env.production` (or inject the variable through your process manager). Do not commit production secrets. The current public documentation experience does not require provider-specific credentials for its basic site shell; configure any optional integrations separately.
+Create `apps/v4/.env.production` (or inject the variables through your process manager). Do not commit production secrets. Registry health history is stored on the application host; set `MOONWITNESS_DATA_DIR` to a persistent directory writable by the application user. No Vercel Blob account or Vercel-specific token is required.
 
 Point the DNS A/AAAA records for `ui.moonwitness.biz.id` at your server. Terminate TLS at the reverse proxy and forward requests to the Next.js process on port `4000`.
 
@@ -49,6 +49,7 @@ User=moonwitness
 WorkingDirectory=/srv/MW-UI
 Environment=NODE_ENV=production
 Environment=NEXT_PUBLIC_APP_URL=https://ui.moonwitness.biz.id
+Environment=MOONWITNESS_DATA_DIR=/var/lib/moonwitness-ui/data
 ExecStart=/usr/bin/pnpm v4:start
 Restart=always
 RestartSec=5
@@ -87,6 +88,7 @@ Configure HTTPS with your host's certificate automation (for example, Certbot) a
 - [ ] TLS certificate is valid and renews automatically.
 - [ ] `NEXT_PUBLIC_APP_URL` is exactly `https://ui.moonwitness.biz.id` at build and runtime.
 - [ ] Dependencies are installed from the committed lockfile.
+- [ ] `MOONWITNESS_DATA_DIR` points to a persistent, backed-up directory writable by the application user.
 - [ ] Registry artifacts are built from the same revision.
 - [ ] `pnpm v4:build` completes successfully.
 - [ ] The process manager starts the app and restores it after reboot.
@@ -99,6 +101,7 @@ Configure HTTPS with your host's certificate automation (for example, Certbot) a
 
 - Do not expose port `4000` directly to the public internet when a reverse proxy is available.
 - Keep environment files and credentials outside version control.
+- Persist and back up `MOONWITNESS_DATA_DIR`; registry health snapshots and monitoring history are stored there.
 - Rebuild after changing `NEXT_PUBLIC_APP_URL`; Next.js public environment variables are embedded during the build.
 - Deploy immutable, reviewed revisions and keep a rollback target.
 - This guide documents a self-managed deployment path; it does not claim that DNS, TLS, server provisioning, or deployment has already been performed.
