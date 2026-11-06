@@ -68,10 +68,6 @@ const nextConfig = {
         protocol: "https",
         hostname: "images.unsplash.com",
       },
-      {
-        protocol: "https",
-        hostname: "avatar.vercel.sh",
-      },
     ],
   },
   turbopack: {
@@ -231,33 +227,6 @@ const nextConfig = {
       {
         source: "/init.md",
         destination: "/init/md",
-      },
-      // The OIDC registry (shadcn-ui/oidc-ui) is a separate Vercel project
-      // served under /oidc. It sets basePath: "/oidc", so the prefix is
-      // forwarded as-is. RSC requests for the zone's HOME page get
-      // normalized to /oidc.rsc, /oidc.prefetch.rsc and /oidc.segments/*
-      // (dot, not slash) before rewrites run, and the oidc deployment has
-      // no literal outputs at those paths — so send them to /oidc and let
-      // the forwarded RSC headers select the payload there.
-      {
-        source: "/oidc",
-        destination: "https://oidc.shadcn.com/oidc",
-      },
-      {
-        source: "/oidc.rsc",
-        destination: "https://oidc.shadcn.com/oidc",
-      },
-      {
-        source: "/oidc.prefetch.rsc",
-        destination: "https://oidc.shadcn.com/oidc",
-      },
-      {
-        source: "/oidc.segments/:path*",
-        destination: "https://oidc.shadcn.com/oidc",
-      },
-      {
-        source: "/oidc/:path*",
-        destination: "https://oidc.shadcn.com/oidc/:path*",
       },
     ]
   },
