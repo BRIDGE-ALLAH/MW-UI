@@ -47,7 +47,8 @@ export function WelcomeDialog() {
             Create your Moonwitness UI project
           </DialogTitle>
           <DialogDescription className="text-left leading-relaxed text-foreground">
-            Shape your project from the ground up. Choose a component base, font, color scheme, icons, and more.
+            Shape your project from the ground up. Choose a component base,
+            font, color scheme, icons, and more.
           </DialogDescription>
           <DialogDescription className="mt-2 text-left leading-relaxed font-medium text-foreground">
             Available for major React frameworks.
