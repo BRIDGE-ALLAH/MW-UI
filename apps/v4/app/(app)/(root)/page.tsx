@@ -112,7 +112,7 @@ export default function IndexPage() {
             </div>
           </div>
 
-          <div className="mw-hero-art" aria-label="Moonwitness crescent and orbit emblem">
+          <div className="mw-hero-art" role="img" aria-label="Moonwitness crescent and orbit emblem">
             <div className="mw-orbit-ring mw-orbit-ring-outer" />
             <div className="mw-orbit-ring mw-orbit-ring-middle" />
             <div className="mw-orbit-ring mw-orbit-ring-inner" />
