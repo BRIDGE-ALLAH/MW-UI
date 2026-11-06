@@ -1,6 +1,10 @@
 export const siteConfig = {
   name: "Moonwitness UI",
-  url: process.env.NEXT_PUBLIC_APP_URL || "https://ui.moonwitness.biz.id",
+  url:
+    process.env.NEXT_PUBLIC_APP_URL ||
+    (process.env.NODE_ENV === "production"
+      ? "https://ui.moonwitness.biz.id"
+      : "http://localhost:4000"),
   ogImage: "/opengraph-image",
   tagline: "Observe. Understand. Preserve.",
   description:
