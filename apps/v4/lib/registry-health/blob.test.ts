@@ -55,7 +55,9 @@ const RUN: RegistryMonitorRun = {
 }
 
 async function withDataDirectory(run: (dataDir: string) => Promise<void>) {
-  const dataDir = await fs.mkdtemp(path.join(os.tmpdir(), "moonwitness-health-"))
+  const dataDir = await fs.mkdtemp(
+    path.join(os.tmpdir(), "moonwitness-health-")
+  )
   try {
     await run(dataDir)
   } finally {
@@ -102,7 +104,7 @@ describe("local registry health storage", () => {
     })
   })
 
-  it("keeps immutable run history and overwrites daily, state, and latest files", async () => {
+  it("keeps run history and updates the latest snapshot", async () => {
     await withDataDirectory(async (dataDir) => {
       const result = await publishRegistryHealth({
         state: STATE,
