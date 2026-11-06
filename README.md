@@ -44,7 +44,7 @@ It provides the interface layer—not the authoritative source of application da
 | `apps/v4` | Next.js documentation, examples, and component experience |
 | `packages` | Shared packages and tooling |
 | `apps/v4/registry` | Registry component sources |
-| Root `*.md` files | Project blueprint, brand, architecture, roadmap, and contribution guide |
+| Root `*.md` files | Project blueprint, brand, architecture, and contribution guide |
 
 ## Brand assets
 
@@ -61,6 +61,7 @@ Use the shared [MoonwitnessMark component](./apps/v4/components/moonwitness-mark
 - [Brand guidelines](./BRAND_GUIDELINES.md) — visual identity, voice, color, typography, and usage.
 - [Architecture](./ARCHITECTURE.md) — current foundation, ownership boundaries, and integration direction.
 - [Roadmap](./ROADMAP.md) — staged implementation plan and acceptance criteria.
+- [Deployment guide](./DEPLOYMENT.md) — self-hosted production deployment without Vercel.
 - [Contributing](./CONTRIBUTING.md) — local development and contribution workflow.
 
 ## Getting started

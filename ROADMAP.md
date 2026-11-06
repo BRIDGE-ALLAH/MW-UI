@@ -62,5 +62,6 @@ Roadmap items are planned work, not shipped capabilities.
 - [ ] Establish release notes and migration guides.
 - [ ] Add examples for common experience families.
 - [ ] Define stable versus experimental API status.
+- [x] Document a self-hosted production deployment path that does not depend on Vercel.
 
-**Acceptance:** developers can install, adapt, test, and upgrade components predictably.
+**Acceptance:** developers can install, adapt, test, and upgrade components predictably; operators can deploy the site on infrastructure they control.
